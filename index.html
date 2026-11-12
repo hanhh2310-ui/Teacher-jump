@@ -35,20 +35,24 @@ html,body{
 .hudbox small{display:block;font-size:10px;letter-spacing:.5px;opacity:.75}
 .hudbox b{font-size:19px;font-variant-numeric:tabular-nums}
 #hudLeft{left:calc(var(--safe-left) + 12px)}
-#hudRight{right:calc(var(--safe-right) + 12px);text-align:right}
+#hudRight{right:calc(var(--safe-right) + 12px);text-align:right;display:flex;align-items:center;gap:8px;pointer-events:auto}
 #hudMid{position:absolute;left:50%;transform:translateX(-50%);top:calc(var(--safe-top) + 10px);text-align:center}
 #modeBadge{display:inline-block;background:var(--red);color:#fff;border:3px solid var(--ink);border-radius:12px;padding:2px 10px;font-size:12px;letter-spacing:1px}
 @media (orientation:portrait){#hudMid{top:calc(var(--safe-top) + 62px)}#wordBox{top:calc(var(--safe-top) + 122px)}}
 #micPill{display:none;margin-top:4px;background:#fff;border:2px solid var(--ink);border-radius:12px;padding:2px 8px;font-size:11px}
 #micPill.on{background:#d6ffe3}
 #micPill.wait{background:#ffe9c2}
+#btnMute{
+  background:#fff;border:2px solid var(--ink);border-radius:10px;width:32px;height:32px;
+  font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;
+}
 
-/* ---------- Voice word ---------- */
+/* ---------- Voice word / Question Box ---------- */
 #wordBox{position:absolute;left:50%;top:calc(var(--safe-top) + 74px);transform:translateX(-50%);display:none;text-align:center;pointer-events:none;width:min(88vw,360px)}
 #wordCard{background:#fff;border:4px solid var(--red);border-radius:20px;padding:8px 16px 10px;box-shadow:0 6px 0 rgba(43,45,91,.35)}
 #wordCard.ok{border-color:var(--green);background:#eaffef}
 #wordLabel{font-size:12px;font-weight:800;color:#777}
-#wordText{font-size:clamp(32px,9vw,54px);font-weight:900;color:var(--red);line-height:1.1;word-break:break-all}
+#wordText{font-size:clamp(26px,7vw,42px);font-weight:900;color:var(--red);line-height:1.1;word-break:break-all}
 #wordCard.ok #wordText{color:#1e9e52}
 #timeBar{height:8px;background:#e6e6ef;border-radius:6px;overflow:hidden;margin-top:6px}
 #timeFill{height:100%;width:100%;background:var(--green)}
@@ -66,42 +70,43 @@ html,body{
   background:linear-gradient(#fffdf2,#fff1bd);border:4px solid var(--ink);border-radius:26px;
   padding:16px 14px;box-shadow:0 8px 0 rgba(43,45,91,.5);
 }
-h1{margin:0;font-size:clamp(30px,9vw,46px);line-height:1;color:var(--red);letter-spacing:1px;text-shadow:0 3px 0 #fff,0 5px 0 rgba(43,45,91,.25)}
-.sub{margin:6px 0 10px;font-weight:800;font-size:14px}
+h1{margin:0;font-size:clamp(28px,8vw,42px);line-height:1;color:var(--red);letter-spacing:1px;text-shadow:0 3px 0 #fff,0 5px 0 rgba(43,45,91,.25)}
+.sub{margin:4px 0 8px;font-weight:800;font-size:13px}
 .sub span{background:var(--red);color:#fff;border-radius:10px;padding:1px 8px}
-.credit{display:inline-block;text-align:center;background:#fff;border:3px solid var(--ink);border-radius:14px;padding:4px 12px;margin:0 0 4px;font-size:13px;font-weight:800;line-height:1.3;color:var(--ink)}
-.sectionTitle{font-weight:900;font-size:13px;margin:10px 0 6px;letter-spacing:.5px}
+.credit{display:inline-block;text-align:center;background:#fff;border:3px solid var(--ink);border-radius:14px;padding:4px 12px;margin:0 0 4px;font-size:12px;font-weight:800;line-height:1.3;color:var(--ink)}
+.sectionTitle{font-weight:900;font-size:12px;margin:8px 0 4px;letter-spacing:.5px}
 .chars{display:flex;gap:10px;justify-content:center}
 .charcard{
-  flex:1;max-width:190px;background:#fff;border:3px solid #c9cbe6;border-radius:18px;padding:6px 4px 8px;
+  flex:1;max-width:190px;background:#fff;border:3px solid #c9cbe6;border-radius:18px;padding:4px;
   font:inherit;color:var(--ink);cursor:pointer;touch-action:manipulation;
 }
-.charcard canvas{width:110px;height:130px;display:block;margin:0 auto}
-.charcard span{display:block;font-weight:900;font-size:14px}
+.charcard canvas{width:100px;height:120px;display:block;margin:0 auto}
+.charcard span{display:block;font-weight:900;font-size:13px}
 .charcard.selected{border-color:var(--red);background:#fff4f6;box-shadow:0 0 0 3px rgba(230,57,80,.3)}
 .btn{
-  display:block;width:100%;margin:8px 0 0;padding:12px 10px;font:inherit;font-weight:900;font-size:17px;
+  display:block;width:100%;margin:6px 0 0;padding:10px;font:inherit;font-weight:900;font-size:15px;
   border:3px solid var(--ink);border-radius:16px;color:#fff;cursor:pointer;touch-action:manipulation;
-  box-shadow:0 5px 0 rgba(43,45,91,.55);
+  box-shadow:0 4px 0 rgba(43,45,91,.55);
 }
-.btn:active{transform:translateY(3px);box-shadow:0 2px 0 rgba(43,45,91,.55)}
-.btn small{display:block;font-weight:700;font-size:12px;opacity:.95;margin-top:2px}
+.btn:active{transform:translateY(3px);box-shadow:0 1px 0 rgba(43,45,91,.55)}
+.btn small{display:block;font-weight:700;font-size:11px;opacity:.95;margin-top:2px}
 .btn.blue{background:var(--blue)}
 .btn.pink{background:#e94d8f}
+.btn.orange{background:#d35400}
 .btn.green{background:#27ae60}
 .btn.gray{background:#7f86a8}
 .btn.dim{opacity:.6}
-.note{margin-top:10px;font-size:12px;font-weight:700;line-height:1.35;color:#4b4f7a}
-.err{display:none;margin-top:10px;background:#ffe3e3;border:3px solid #d63031;border-radius:14px;padding:8px 10px;color:#a61b1b;font-size:13px;font-weight:800;line-height:1.35;text-align:left}
-.warn{display:none;margin-top:8px;background:#fff3cd;border:2px solid #e0a800;border-radius:12px;padding:6px 10px;color:#7a5a00;font-size:12px;font-weight:800;line-height:1.35;text-align:left}
-.bigText{font-size:clamp(28px,8vw,42px);font-weight:900;color:var(--red);line-height:1.05;margin:0}
-.stat{display:flex;justify-content:center;gap:10px;margin:10px 0 2px}
+.note{margin-top:8px;font-size:11px;font-weight:700;line-height:1.3;color:#4b4f7a}
+.err{display:none;margin-top:8px;background:#ffe3e3;border:3px solid #d63031;border-radius:14px;padding:6px 8px;color:#a61b1b;font-size:12px;font-weight:800;line-height:1.3;text-align:left}
+.warn{display:none;margin-top:6px;background:#fff3cd;border:2px solid #e0a800;border-radius:12px;padding:6px 8px;color:#7a5a00;font-size:11px;font-weight:800;line-height:1.3;text-align:left}
+.bigText{font-size:clamp(24px,7vw,36px);font-weight:900;color:var(--red);line-height:1.05;margin:0}
+.stat{display:flex;justify-content:center;gap:10px;margin:8px 0 2px}
 .stat div{flex:1;background:#fff;border:3px solid var(--ink);border-radius:14px;padding:6px 4px}
-.stat small{display:block;font-size:11px;font-weight:800;opacity:.7}
-.stat b{font-size:24px;font-variant-numeric:tabular-nums}
-#overNew{display:none;margin-top:8px;font-weight:900;color:#d35400;font-size:16px}
-#overReason{margin-top:8px;font-weight:800;font-size:14px;line-height:1.35}
-.spinner{width:42px;height:42px;margin:10px auto;border:5px solid #d8dbf0;border-top-color:var(--red);border-radius:50%;animation:spin 1s linear infinite}
+.stat small{display:block;font-size:10px;font-weight:800;opacity:.7}
+.stat b{font-size:22px;font-variant-numeric:tabular-nums}
+#overNew{display:none;margin-top:6px;font-weight:900;color:#d35400;font-size:15px}
+#overReason{margin-top:6px;font-weight:800;font-size:13px;line-height:1.3}
+.spinner{width:38px;height:38px;margin:8px auto;border:5px solid #d8dbf0;border-top-color:var(--red);border-radius:50%;animation:spin 1s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 </style>
 </head>
@@ -112,12 +117,15 @@ h1{margin:0;font-size:clamp(30px,9vw,46px);line-height:1;color:var(--red);letter
   <div id="hud">
     <div class="hudbox" id="hudLeft"><small id="hsLabel">🏆 HIGH SCORE</small><b id="hsVal">00000</b></div>
     <div id="hudMid"><span id="modeBadge">NORMAL</span><br><span id="micPill">🎤</span></div>
-    <div class="hudbox" id="hudRight"><small>ĐIỂM</small><b id="scoreVal">00000</b></div>
+    <div class="hudbox" id="hudRight">
+      <div><small>ĐIỂM</small><b id="scoreVal">00000</b></div>
+      <button id="btnMute" type="button" title="Tắt/Bật nhạc">🔊</button>
+    </div>
   </div>
 
   <div id="wordBox">
     <div id="wordCard">
-      <div id="wordLabel">🎤 ĐỌC TO TỪ NÀY BẰNG TIẾNG ANH</div>
+      <div id="wordLabel">🎤 ĐỌC CÂU TRẢ LỜI</div>
       <div id="wordText">teacher</div>
       <div id="timeBar"><div id="timeFill"></div></div>
     </div>
@@ -133,26 +141,28 @@ h1{margin:0;font-size:clamp(30px,9vw,46px);line-height:1;color:var(--red);letter
 
       <div class="sectionTitle">CHỌN NHÂN VẬT</div>
       <div class="chars">
-        <button class="charcard selected" id="cardMale" type="button"><canvas id="pvMale" width="220" height="260"></canvas><span>👨‍🏫 Thầy giáo</span></button>
-        <button class="charcard" id="cardFemale" type="button"><canvas id="pvFemale" width="220" height="260"></canvas><span>👩‍🏫 Cô giáo</span></button>
+        <button class="charcard selected" id="cardMale" type="button"><canvas id="pvMale" width="200" height="240"></canvas><span>👨‍🏫 Thầy giáo</span></button>
+        <button class="charcard" id="cardFemale" type="button"><canvas id="pvFemale" width="200" height="240"></canvas><span>👩‍🏫 Cô giáo</span></button>
       </div>
 
       <div class="sectionTitle">CHỌN CHẾ ĐỘ CHƠI</div>
-      <button class="btn blue" id="btnNormal" type="button">▶ NORMAL MODE<small>Chạm màn hình (hoặc Space) để nhảy</small></button>
-      <button class="btn pink" id="btnVoice" type="button">🎤 VOICE MODE<small>Đọc đúng từ tiếng Anh để nhảy – đọc sai là thua!</small></button>
+      <button class="btn blue" id="btnNormal" type="button">▶ NORMAL MODE<small>Chạm màn hình hoặc phím Space để nhảy</small></button>
+      <button class="btn green" id="btnMath" type="button">🔢 VOICE: MÔN TOÁN<small>Đọc đáp án phép tính cộng trừ nhân chia</small></button>
+      <button class="btn orange" id="btnViet" type="button">📖 VOICE: MÔN VĂN<small>Đọc từ chính tả phân biệt L và N</small></button>
+      <button class="btn pink" id="btnEnglish" type="button">🔤 VOICE: MÔN ANH<small>Đọc từ vựng tiếng Anh trường học</small></button>
 
       <div class="err" id="startError"></div>
       <div class="warn" id="voiceWarn"></div>
-      <div class="note">Voice Mode cần micro và Internet.</div>
+      <div class="note">Voice Mode cần micro và kết nối mạng.</div>
     </div>
   </div>
 
   <!-- Bật micro trước khi chơi Voice Mode -->
   <div class="screen" id="micCheckScreen">
     <div class="panel">
-      <p class="bigText" style="font-size:30px">🎤 BẬT MICRO</p>
-      <div class="note" style="font-size:14px;margin-top:8px">Voice Mode cần micro để nghe bạn đọc từ tiếng Anh.<br>Bấm nút bên dưới rồi chọn <b>“Cho phép”</b>.</div>
-      <div id="micCheckStatus" class="note" style="font-size:15px;min-height:22px"></div>
+      <p class="bigText" style="font-size:26px">🎤 BẬT MICRO</p>
+      <div class="note" style="font-size:13px;margin-top:6px">Chế độ Voice cần micro để nghe bạn đọc đáp án.<br>Bấm nút bên dưới rồi chọn <b>“Cho phép”</b>.</div>
+      <div id="micCheckStatus" class="note" style="font-size:14px;min-height:20px"></div>
       <button class="btn pink" id="btnMicEnable" type="button">🎤 BẬT MICRO</button>
       <button class="btn gray" id="btnMicBack" type="button">← QUAY LẠI</button>
     </div>
@@ -161,9 +171,9 @@ h1{margin:0;font-size:clamp(30px,9vw,46px);line-height:1;color:var(--red);letter
   <!-- Đang khởi động nhận diện giọng nói -->
   <div class="screen" id="micScreen">
     <div class="panel">
-      <div class="bigText" style="font-size:26px">🎤 Đang bật micro…</div>
+      <div class="bigText" style="font-size:24px">🎤 Đang bật micro…</div>
       <div class="spinner"></div>
-      <div class="note" style="font-size:13px">Nếu trình duyệt hỏi, hãy bấm <b>“Cho phép”</b>.</div>
+      <div class="note" style="font-size:12px">Nếu trình duyệt hỏi, hãy bấm <b>“Cho phép”</b>.</div>
       <button class="btn gray" id="btnMicCancel" type="button">HỦY</button>
     </div>
   </div>
@@ -198,17 +208,139 @@ h1{margin:0;font-size:clamp(30px,9vw,46px);line-height:1;color:var(--red);letter
 (function () {
 'use strict';
 
-/* =====================================================================
-   TEACHER JUMP – 20/11
-   Canvas + JavaScript thuần, không phụ thuộc thư viện hay ảnh ngoài.
-   ===================================================================== */
-
 var $ = function (id) { return document.getElementById(id); };
 var canvas = $('game');
 var ctx = canvas.getContext('2d');
 
+/* =====================================================================
+   CHIPTUNE / MONOPHONIC AUDIO ENGINE (Web Audio API - Kiểu Mario đơn sắc)
+   ===================================================================== */
+var AudioEngine = (function () {
+  var actx = null;
+  var muted = false;
+  var bgmTimer = null;
+  var step = 0;
+
+  // Bảng tần số các nốt nhạc (Hz)
+  var N = {
+    C4: 261.63, D4: 293.66, E4: 329.63, F4: 349.23, G4: 392.00, A4: 440.00, B4: 493.88,
+    C5: 523.25, D5: 587.33, E5: 659.25, F5: 698.46, G5: 783.99, A5: 880.00,
+    G3: 196.00, A3: 220.00, B3: 246.94, _: 0
+  };
+
+  // Giai điệu vui tươi, nhịp bước chạy đơn sắc kiểu retro 8-bit (1 kênh sóng vuông)
+  var MELODY = [
+    N.E5, N.E5, N._,  N.E5, N._,  N.C5, N.E5, N._,
+    N.G5, N._,  N._,  N._,  N.G4, N._,  N._,  N._,
+    N.C5, N._,  N._,  N.G4, N._,  N._,  N.E4, N._,
+    N._,  N.A4, N._,  N.B4, N._,  N.A4, N.G4, N._,
+    N.E5, N.G5, N.A5, N._,  N.F5, N.G5, N._,  N.E5,
+    N._,  N.C5, N.D5, N.B4, N._,  N._,  N._,  N._
+  ];
+
+  function init() {
+    if (!actx) {
+      var AC = window.AudioContext || window.webkitAudioContext;
+      if (AC) actx = new AC();
+    }
+    if (actx && actx.state === 'suspended') {
+      actx.resume();
+    }
+  }
+
+  function playTone(freq, dur, type, vol) {
+    if (muted || !actx || freq <= 0) return;
+    try {
+      var osc = actx.createOscillator();
+      var gain = actx.createGain();
+      osc.type = type || 'square'; // Sóng vuông đơn sắc đặc trưng 8-bit
+      osc.frequency.setValueAtTime(freq, actx.currentTime);
+
+      gain.gain.setValueAtTime(vol || 0.04, actx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.0001, actx.currentTime + dur);
+
+      osc.connect(gain);
+      gain.connect(actx.destination);
+
+      osc.start();
+      osc.stop(actx.currentTime + dur);
+    } catch (e) {}
+  }
+
+  function startBGM() {
+    init();
+    stopBGM();
+    step = 0;
+    bgmTimer = setInterval(function () {
+      if (muted || state !== 'playing') return;
+      var freq = MELODY[step % MELODY.length];
+      if (freq > 0) {
+        // Giảm âm lượng nhạc nền khi ở chế độ Voice để micro không bị nhiễu
+        var vol = (mode === 'normal') ? 0.035 : 0.015;
+        playTone(freq, 0.11, 'square', vol);
+      }
+      step++;
+    }, 145);
+  }
+
+  function stopBGM() {
+    if (bgmTimer) {
+      clearInterval(bgmTimer);
+      bgmTimer = null;
+    }
+  }
+
+  function sfxJump() {
+    init();
+    if (muted || !actx) return;
+    try {
+      var osc = actx.createOscillator();
+      var gain = actx.createGain();
+      osc.type = 'square';
+      osc.frequency.setValueAtTime(220, actx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(580, actx.currentTime + 0.14);
+      gain.gain.setValueAtTime(0.05, actx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, actx.currentTime + 0.14);
+      osc.connect(gain);
+      gain.connect(actx.destination);
+      osc.start();
+      osc.stop(actx.currentTime + 0.14);
+    } catch (e) {}
+  }
+
+  function sfxScore() {
+    init();
+    playTone(987.77, 0.07, 'square', 0.05); // B5
+    setTimeout(function () { playTone(1318.51, 0.16, 'square', 0.05); }, 70); // E6
+  }
+
+  function sfxOver() {
+    init();
+    stopBGM();
+    var notes = [392.00, 349.23, 329.63, 261.63];
+    notes.forEach(function (f, idx) {
+      setTimeout(function () { playTone(f, 0.16, 'square', 0.06); }, idx * 140);
+    });
+  }
+
+  function toggleMute() {
+    muted = !muted;
+    $('btnMute').textContent = muted ? '🔇' : '🔊';
+    if (!muted && state === 'playing') startBGM();
+  }
+
+  return {
+    startBGM: startBGM,
+    stopBGM: stopBGM,
+    sfxJump: sfxJump,
+    sfxScore: sfxScore,
+    sfxOver: sfxOver,
+    toggleMute: toggleMute
+  };
+})();
+
 /* ---------------- Lưu trữ (localStorage) ---------------- */
-var HS_KEY = 'teacherjump_highscore_';
+var HS_KEY = 'teacherjump_hs_v2_';
 var CHAR_KEY = 'teacherjump_char';
 function loadHS(m) {
   try { var v = parseInt(localStorage.getItem(HS_KEY + m), 10); return isNaN(v) ? 0 : v; } catch (e) { return 0; }
@@ -219,38 +351,43 @@ function loadChar() {
 }
 function saveChar(c) { try { localStorage.setItem(CHAR_KEY, c); } catch (e) {} }
 
-/* ---------------- Hằng số game ---------------- */
-var G = 2400;                         // trọng lực (px/s^2)
-var JUMP_H = 135;                     // độ cao đỉnh nhảy
-var V0 = Math.sqrt(2 * G * JUMP_H);   // vận tốc nhảy
-var AIR = 2 * V0 / G;                 // thời gian trên không
-var PW = 44, PH = 80;                 // kích thước nhân vật
-var HIT_L = 10, HIT_R = 34, HIT_H = 68; // hộp va chạm (tương đối so với playerX)
+/* ---------------- Hằng số & Dữ liệu môn học ---------------- */
+var G = 2400;
+var JUMP_H = 135;
+var V0 = Math.sqrt(2 * G * JUMP_H);
+var AIR = 2 * V0 / G;
+var PW = 44, PH = 80;
+var HIT_L = 10, HIT_R = 34, HIT_H = 68;
+
 var CFG = {
-  normal: { base: 300, max: 620, inc: 0.35 },
-  voice:  { base: 230, max: 340, inc: 0.10 }
+  normal:  { base: 300, max: 620, inc: 0.35 },
+  math:    { base: 220, max: 360, inc: 0.12 },
+  viet:    { base: 220, max: 360, inc: 0.12 },
+  english: { base: 220, max: 360, inc: 0.12 }
 };
-var WORDS = ['teacher','student','school','book','pencil','class','lesson','homework','notebook','ruler',
-  'library','study','learn','reading','writing','happy','flower','gift','respect','knowledge','english',
-  'science','history','music','eraser','answer','question','grammar','listen','speak','grateful','wisdom',
-  'classroom','teaching'];
+
+var WORD_LISTS = {
+  english: ['teacher','student','school','book','pencil','class','lesson','homework','notebook','ruler','library','study','learn','reading','writing','happy','flower','gift','respect','knowledge','english','science','history','music','eraser','answer','question','grammar','listen','speak','grateful','wisdom'],
+  viet: ['long lanh','nức nở','long trọng','nông nổi','lên lớp','nói năng','làm lụng','nấu nướng','la cà','no đủ','lấp lánh','na ná','lững lờ','nhao nhác','lấm lét','nũng nịu','long tuột','nặng nề','lan man','nền nã','lợi lộc','nản lòng']
+};
 
 /* ---------------- Trạng thái ---------------- */
 var W = 800, H = 400, scale = 1, dpr = 1, vw = 800, vh = 400;
 var groundY = 300, playerX = 100, portrait = false;
-var state = 'menu';   // menu | mic | playing | paused | dying | over
+var state = 'menu';
 var mode = 'normal';
 var charType = loadChar();
-var highScores = { normal: loadHS('normal'), voice: loadHS('voice') };
+var highScores = { normal: loadHS('normal'), math: loadHS('math'), viet: loadHS('viet'), english: loadHS('english') };
 
 var speed = 300, scoreF = 0, score = 0, shownScore = -1;
 var player = { y: 0, vy: 0, onGround: true };
 var jumpBuffer = 0, runT = 0, tAnim = 0, deadT = 0;
-var obstacles = [], decor = [], pebbles = [], clouds = [];
+var obstacles = [], decor = [], pebbles = [], clouds = [], birds = [];
 var bgOff = 0, nextGap = 600;
-var activeObs = null, lastTarget = '', lastSuccessAt = 0, recentWords = [];
+var activeObs = null, lastTarget = '', lastSuccessAt = 0, recentItems = [];
 var overAt = 0, newRecord = false, overReasonText = '';
 var lastTs = 0;
+var worldTime = 0;
 
 /* ---------------- Tiện ích vẽ ---------------- */
 function rr(c, x, y, w, h, r) {
@@ -272,6 +409,7 @@ function star(c, x, y, r, col) {
   }
   c.closePath(); c.fill();
 }
+
 /* ---------------- Vẽ nhân vật ---------------- */
 var SKIN = '#ffdcbc', SKIN_SH = '#efb98f';
 function limb(c, x, y, len, ang, w, col, edge) {
@@ -334,39 +472,28 @@ function mouth(c, x, y, pose, female) {
 }
 function drawHead(c, cx, cy, P, female) {
   var dead = P.dead, blink = !dead && P.pose !== 'jump' && ((P.t % 3.3) < 0.12);
-  // cổ
   c.fillStyle = SKIN_SH; c.fillRect(cx - 3, cy + 9, 7, 8);
-  // tai (nam)
   if (!female) {
     c.fillStyle = SKIN; c.strokeStyle = SKIN_SH; c.lineWidth = 1;
     c.beginPath(); c.ellipse(cx - 12.3, cy + 2.5, 2.8, 3.6, 0, 0, Math.PI * 2); c.fill(); c.stroke();
   }
-  // mặt
   c.fillStyle = SKIN; c.strokeStyle = SKIN_SH; c.lineWidth = 1.2;
   c.beginPath(); c.ellipse(cx, cy, 13.6, 14, 0, 0, Math.PI * 2); c.fill(); c.stroke();
-  // má hồng
   c.fillStyle = female ? 'rgba(255,110,140,.5)' : 'rgba(255,120,120,.35)';
   c.beginPath(); c.ellipse(cx + 8.6, cy + 6.4, 3.1, 2.1, 0, 0, Math.PI * 2); c.fill();
   c.beginPath(); c.ellipse(cx - 3.2, cy + 6.4, 2.6, 1.8, 0, 0, Math.PI * 2); c.fill();
-  // lông mày + mắt
   var by = female ? cy - 8.4 : cy - 8.2;
   brow(c, cx + 2.2, by, dead, female); brow(c, cx + 9.2, by, dead, female);
   eye(c, cx + 2.2, cy, dead, female, blink); eye(c, cx + 9.2, cy, dead, female, blink);
-  // kính (thầy): gọng mảnh, không tô tròng
   if (!female) {
     c.strokeStyle = '#6b6b80'; c.lineWidth = 1; c.lineCap = 'round';
     rr(c, cx - 1.6, cy - 4.6, 7.6, 9, 3); c.stroke();
     rr(c, cx + 5.6, cy - 4.6, 7.6, 9, 3); c.stroke();
     c.beginPath(); c.moveTo(cx + 6, cy - 1.5); c.lineTo(cx + 5.6, cy - 1.5); c.stroke();
     c.beginPath(); c.moveTo(cx - 1.6, cy - 2); c.lineTo(cx - 10, cy - 3); c.stroke();
-    c.strokeStyle = 'rgba(255,255,255,.8)'; c.lineWidth = 1;
-    c.beginPath(); c.moveTo(cx - 0.2, cy - 2.8); c.lineTo(cx + 1.2, cy - 3.6); c.stroke();
-    c.beginPath(); c.moveTo(cx + 7, cy - 2.8); c.lineTo(cx + 8.4, cy - 3.6); c.stroke();
   }
-  // mũi
   c.strokeStyle = SKIN_SH; c.lineWidth = 1.2; c.lineCap = 'round';
   c.beginPath(); c.moveTo(cx + 12.4, cy + 3); c.quadraticCurveTo(cx + 14.4, cy + 4.6, cx + 12.2, cy + 5.4); c.stroke();
-  // miệng
   mouth(c, cx + 6.6, cy + 7.6, P.pose, female);
 }
 function drawHairMale(c, cx, cy) {
@@ -379,14 +506,6 @@ function drawHairMale(c, cx, cy) {
   c.bezierCurveTo(cx - 7.5, cy - 9.5, cx - 10.2, cy - 4, cx - 10.2, cy + 1.5);
   c.lineTo(cx - 12, cy + 6.5);
   c.closePath(); c.fill();
-  // phần tóc mái chải ngược
-  c.fillStyle = '#25243a';
-  c.beginPath();
-  c.moveTo(cx - 6, cy - 14); c.bezierCurveTo(cx, cy - 20, cx + 10, cy - 19, cx + 15, cy - 11);
-  c.bezierCurveTo(cx + 9, cy - 15, cx + 2, cy - 15.5, cx - 6, cy - 14); c.fill();
-  // ánh tóc
-  c.strokeStyle = 'rgba(160,170,230,.55)'; c.lineWidth = 1.6; c.lineCap = 'round';
-  c.beginPath(); c.moveTo(cx - 5, cy - 16.5); c.quadraticCurveTo(cx + 2, cy - 19.5, cx + 9, cy - 17); c.stroke();
 }
 function drawHairFemaleBack(c, cx, cy, sw) {
   c.fillStyle = '#17141f';
@@ -394,10 +513,7 @@ function drawHairFemaleBack(c, cx, cy, sw) {
   c.moveTo(cx - 3, cy - 14);
   c.bezierCurveTo(cx - 25, cy - 14, cx - 27 + sw * 2, cy + 12, cx - 19 + sw * 3, cy + 35);
   c.bezierCurveTo(cx - 15 + sw * 3, cy + 42, cx - 8 + sw * 2, cy + 40, cx - 6 + sw * 2, cy + 31);
-  c.bezierCurveTo(cx - 5, cy + 20, cx - 3, cy + 8, cx + 1, cy + 2);
   c.closePath(); c.fill();
-  c.strokeStyle = 'rgba(150,140,200,.35)'; c.lineWidth = 1.6; c.lineCap = 'round';
-  c.beginPath(); c.moveTo(cx - 14, cy - 2); c.bezierCurveTo(cx - 20 + sw, cy + 10, cx - 17 + sw * 2, cy + 22, cx - 14 + sw * 3, cy + 32); c.stroke();
 }
 function drawHairFemaleFront(c, cx, cy) {
   c.fillStyle = '#17141f';
@@ -405,22 +521,14 @@ function drawHairFemaleFront(c, cx, cy) {
   c.moveTo(cx - 13.8, cy + 7);
   c.bezierCurveTo(cx - 20, cy - 10, cx - 7, cy - 23, cx + 5, cy - 20);
   c.bezierCurveTo(cx + 15, cy - 18, cx + 18.5, cy - 8, cx + 15.5, cy - 0.5);
-  c.bezierCurveTo(cx + 13.5, cy - 8, cx + 6, cy - 12.5, cx - 1, cy - 11);
-  c.bezierCurveTo(cx - 7, cy - 9.5, cx - 10, cy - 2, cx - 9.6, cy + 7);
   c.closePath(); c.fill();
-  // ánh tóc
-  c.strokeStyle = 'rgba(170,160,230,.6)'; c.lineWidth = 1.7; c.lineCap = 'round';
-  c.beginPath(); c.moveTo(cx - 8, cy - 15); c.quadraticCurveTo(cx, cy - 20.5, cx + 9, cy - 17); c.stroke();
-  // cài hoa
-  var fx = cx - 6, fy = cy - 13, k;
+  var fx = cx - 6, fy = cy - 13;
   c.fillStyle = '#ff8fb3';
-  for (k = 0; k < 5; k++) {
+  for (var k = 0; k < 5; k++) {
     var a = k * Math.PI * 2 / 5 - Math.PI / 2;
     c.beginPath(); c.arc(fx + Math.cos(a) * 2.6, fy + Math.sin(a) * 2.6, 1.9, 0, Math.PI * 2); c.fill();
   }
-  c.fillStyle = '#ffd23f'; c.beginPath(); c.arc(fx, fy, 1.6, 0, Math.PI * 2); c.fill();
 }
-
 function drawPerson(c, type, cx, fy, t, pose) {
   c.save();
   c.translate(cx, fy);
@@ -438,7 +546,7 @@ function drawPerson(c, type, cx, fy, t, pose) {
     a1 = 0.15; a2 = -0.15; s1 = 0.25; s2 = -0.25; bob = Math.sin(t * 3) * 1.2; sw = Math.sin(t * 3) * 1.5;
   }
   var L = 24, AL = 20;
-  if (type === 'female') { a1 *= 0.7; a2 *= 0.7; } // áo dài: bước nhỏ, gọn hơn
+  if (type === 'female') { a1 *= 0.7; a2 *= 0.7; }
   var maxA = Math.max(Math.abs(a1), Math.abs(a2));
   var hipY = -L * Math.cos(maxA) - bob;
   var shY = hipY - 22;
@@ -447,90 +555,44 @@ function drawPerson(c, type, cx, fy, t, pose) {
   if (type === 'female') drawFemale(c, P); else drawMale(c, P);
   c.restore();
 }
-
 function drawMale(c, P) {
   var h, f, cx = 2;
-  // tay sau
   h = limb(c, 0, P.shY + 4, P.AL, P.s2, 7, '#eef1fa', '#c4cbe0'); hand(c, h);
-  // chân sau (quần âu đen) + giày
   f = limb(c, 0, P.hipY, P.L, P.a2, 9, '#262833');
   c.fillStyle = '#15151b'; c.beginPath(); c.ellipse(f[0] + 3, f[1] + 1.5, 7.5, 4, 0, 0, Math.PI * 2); c.fill();
-  c.fillStyle = '#e8e8f0'; c.fillRect(f[0] - 4, f[1] + 4.2, 14, 1.3);
-  // thân áo sơ mi trắng
   rr(c, -11.5, P.shY, 23, 26, 7); c.fillStyle = '#ffffff'; c.fill(); c.strokeStyle = '#c4cbe0'; c.lineWidth = 1.6; c.stroke();
-  c.strokeStyle = 'rgba(160,170,210,.5)'; c.lineWidth = 1.2; c.beginPath(); c.moveTo(-6, P.shY + 10); c.quadraticCurveTo(-3, P.shY + 16, -6, P.shY + 22); c.stroke();
-  // quần + thắt lưng
   c.fillStyle = '#262833'; rr(c, -11.5, P.hipY - 2, 23, 9, 3); c.fill();
-  c.fillStyle = '#0f0f14'; c.fillRect(-11.5, P.hipY - 2, 23, 3.2);
-  c.fillStyle = '#e7c35a'; c.fillRect(2, P.hipY - 2.4, 4.4, 4);
-  // chân trước
   f = limb(c, 0, P.hipY, P.L, P.a1, 9, '#2f313e');
   c.fillStyle = '#15151b'; c.beginPath(); c.ellipse(f[0] + 3, f[1] + 1.5, 7.5, 4, 0, 0, Math.PI * 2); c.fill();
-  c.fillStyle = '#e8e8f0'; c.fillRect(f[0] - 4, f[1] + 4.2, 14, 1.3);
-  // cổ áo + cà vạt
-  c.fillStyle = '#fff'; c.strokeStyle = '#c4cbe0'; c.lineWidth = 1.2;
-  c.beginPath(); c.moveTo(-6, P.shY - 1); c.lineTo(0.5, P.shY + 8); c.lineTo(-1.2, P.shY - 1.5); c.closePath(); c.fill(); c.stroke();
-  c.beginPath(); c.moveTo(7, P.shY - 1); c.lineTo(0.5, P.shY + 8); c.lineTo(2.2, P.shY - 1.5); c.closePath(); c.fill(); c.stroke();
   c.fillStyle = '#d62839';
   c.beginPath(); c.moveTo(-2, P.shY + 1.5); c.lineTo(3, P.shY + 1.5); c.lineTo(2, P.shY + 5); c.lineTo(4.2, P.shY + 19); c.lineTo(0.5, P.shY + 22.5); c.lineTo(-3.2, P.shY + 19); c.lineTo(-1, P.shY + 5); c.closePath(); c.fill();
-  c.fillStyle = '#ff6b7a'; c.fillRect(-0.6, P.shY + 8, 1.4, 9);
-  // tay trước + cuốn sách
   h = limb(c, 0, P.shY + 4, P.AL, P.s1, 7, '#ffffff', '#c4cbe0');
   c.fillStyle = '#2e86de'; rr(c, h[0] - 1, h[1] - 9, 11, 14, 1.6); c.fill();
-  c.fillStyle = '#fff'; c.fillRect(h[0] + 8, h[1] - 8, 1.6, 12);
   hand(c, h);
-  // đầu + tóc
   drawHead(c, cx, P.headY, P, false);
   drawHairMale(c, cx, P.headY);
 }
-
 function drawFemale(c, P) {
   var h, f, cx = 2, sw = P.sw, hip = P.hipY, sh = P.shY;
-  // tóc dài phía sau
   drawHairFemaleBack(c, cx, P.headY, sw);
-  // tay sau (tay áo dài)
   h = limb(c, 0, sh + 4, P.AL, P.s2, 7, '#ee5f90', '#b8325c'); hand(c, h);
-  // chân (quần lụa trắng) + giày
   f = limb(c, 0, hip, P.L, P.a2, 8.4, '#fbfbff', '#cfd3e6');
-  c.fillStyle = '#ffb0c8'; c.beginPath(); c.ellipse(f[0] + 2.5, f[1] + 1.5, 6, 3.2, 0, 0, Math.PI * 2); c.fill();
   f = limb(c, 0, hip, P.L, P.a1, 8.4, '#ffffff', '#cfd3e6');
-  c.fillStyle = '#ffb0c8'; c.beginPath(); c.ellipse(f[0] + 2.5, f[1] + 1.5, 6, 3.2, 0, 0, Math.PI * 2); c.fill();
-  // vạt sau
   c.fillStyle = '#ee5f90';
   c.beginPath(); c.moveTo(-9.5, hip - 3); c.lineTo(-13 - sw * 0.7, hip + 22); c.lineTo(1.5, hip + 22); c.lineTo(1.5, hip - 3); c.closePath(); c.fill();
-  // thân áo dài (ôm eo)
   c.fillStyle = '#ff7aa8';
-  c.beginPath();
-  c.moveTo(-10.5, sh + 3); c.quadraticCurveTo(-10.5, sh - 1, -7, sh - 1); c.lineTo(7, sh - 1); c.quadraticCurveTo(10.5, sh - 1, 10.5, sh + 3);
-  c.quadraticCurveTo(10.5, sh + 11, 7.6, sh + 14); c.quadraticCurveTo(10, sh + 19, 9.5, hip - 2);
-  c.lineTo(-9.5, hip - 2); c.quadraticCurveTo(-10, sh + 19, -7.6, sh + 14); c.quadraticCurveTo(-10.5, sh + 11, -10.5, sh + 3);
-  c.closePath(); c.fill();
-  // vạt trước
-  c.beginPath(); c.moveTo(-1.5, hip - 3); c.lineTo(sw * 0.9, hip + 22); c.lineTo(15 + sw, hip + 22); c.lineTo(9.8, hip - 3); c.closePath(); c.fill();
-  // viền vàng + hoa văn
-  c.strokeStyle = '#ffe08a'; c.lineWidth = 1.5; c.lineCap = 'round';
-  c.beginPath(); c.moveTo(sw * 0.9, hip + 21); c.lineTo(15 + sw, hip + 21); c.stroke();
-  c.beginPath(); c.moveTo(-13 - sw * 0.7, hip + 21); c.lineTo(1.5, hip + 21); c.stroke();
-  c.beginPath(); c.moveTo(-1.5, hip - 2); c.lineTo(sw * 0.9, hip + 21); c.stroke();
-  c.fillStyle = '#fff';
-  var fl = [[-3, sh + 8], [4, sh + 12], [-1, sh + 17], [7 + sw * 0.4, hip + 9], [11 + sw * 0.6, hip + 16], [3 + sw * 0.5, hip + 15]], i;
-  for (i = 0; i < fl.length; i++) { c.beginPath(); c.arc(fl[i][0], fl[i][1], 1.6, 0, Math.PI * 2); c.fill(); }
-  // cổ trụ
-  c.fillStyle = '#ff7aa8'; c.strokeStyle = '#ffe08a'; c.lineWidth = 1.2;
-  rr(c, -4.5, sh - 4, 9.5, 6.4, 2.6); c.fill(); c.stroke();
-  // tay trước
+  c.beginPath(); c.moveTo(-10.5, sh + 3); c.quadraticCurveTo(-10.5, sh - 1, -7, sh - 1); c.lineTo(7, sh - 1); c.quadraticCurveTo(10.5, sh - 1, 10.5, sh + 3); c.lineTo(9.5, hip - 2); c.lineTo(-9.5, hip - 2); c.closePath(); c.fill();
   h = limb(c, 0, sh + 4, P.AL, P.s1, 7, '#ff7aa8', '#b8325c'); hand(c, h);
-  // đầu + tóc
   drawHead(c, cx, P.headY, P, true);
   drawHairFemaleFront(c, cx, P.headY);
 }
 
-/* ---------------- Chướng ngại vật ---------------- */
+/* ---------------- Chướng ngại vật & Vật thể bay ---------------- */
 var BOOK_COLORS = ['#e74c3c', '#3498db', '#27ae60', '#f39c12', '#9b59b6', '#16a085'];
 function makeObstacle(x) {
   var types = ['books', 'pencil', 'backpack', 'globe'];
   var type = types[(Math.random() * types.length) | 0];
-  var o = { type: type, x: x, w: 40, h: 50, done: false, armed: false, jumped: false, word: null, t0: 1 };
+  var o = { type: type, x: x, w: 40, h: 50, done: false, armed: false, jumped: false, question: null, answer: '', t0: 1 };
   if (type === 'books') {
     o.n = 1 + ((Math.random() * 3) | 0); o.w = 56; o.h = o.n * 18;
     o.cols = []; for (var i = 0; i < o.n; i++) o.cols.push(BOOK_COLORS[(Math.random() * BOOK_COLORS.length) | 0]);
@@ -551,48 +613,30 @@ function drawObstacle(o) {
     for (i = 0; i < o.n; i++) {
       var bw = (i % 2) ? 56 : 48, bx = x + ((i % 2) ? 0 : 4), by = gy - (i + 1) * 18;
       rr(c, bx, by + 1, bw, 17, 3); c.fillStyle = o.cols[i]; c.fill(); c.strokeStyle = 'rgba(0,0,0,.45)'; c.lineWidth = 1.5; c.stroke();
-      c.fillStyle = '#fff8e1'; c.fillRect(bx + bw - 7, by + 4, 5, 11);
-      c.fillStyle = 'rgba(255,255,255,.7)'; c.fillRect(bx + 6, by + 6, 14, 2); c.fillRect(bx + 6, by + 10, 9, 2);
     }
   } else if (o.type === 'pencil') {
     for (i = 0; i < o.n; i++) {
-      var px = x + i * 20, ph = o.hs[i], bodyH = ph - 7 - 6 - 14;
-      c.fillStyle = '#f48fb1'; rr(c, px, gy - 7, 16, 7, 2); c.fill();
-      c.fillStyle = '#b0bec5'; c.fillRect(px, gy - 13, 16, 6);
+      var px = x + i * 20, ph = o.hs[i], bodyH = ph - 19;
       c.fillStyle = '#ffd23f'; c.fillRect(px, gy - 13 - bodyH, 16, bodyH);
-      c.fillStyle = '#f2b705'; c.fillRect(px + 5, gy - 13 - bodyH, 3, bodyH);
       c.strokeStyle = 'rgba(0,0,0,.4)'; c.lineWidth = 1.2; c.strokeRect(px, gy - 13 - bodyH, 16, bodyH);
-      var ty = gy - 13 - bodyH;
-      c.fillStyle = '#f6d2a2'; c.beginPath(); c.moveTo(px, ty); c.lineTo(px + 16, ty); c.lineTo(px + 8, ty - 14); c.closePath(); c.fill();
-      c.fillStyle = '#444'; c.beginPath(); c.moveTo(px + 5.5, ty - 9); c.lineTo(px + 10.5, ty - 9); c.lineTo(px + 8, ty - 14); c.closePath(); c.fill();
     }
   } else if (o.type === 'backpack') {
-    c.strokeStyle = '#2d3436'; c.lineWidth = 4; c.beginPath(); c.arc(x + 23, gy - 46, 8, Math.PI, 2 * Math.PI); c.stroke();
     rr(c, x, gy - 46, 46, 46, 13); c.fillStyle = o.col; c.fill(); c.strokeStyle = 'rgba(0,0,0,.5)'; c.lineWidth = 2; c.stroke();
-    rr(c, x + 6, gy - 22, 34, 18, 6); c.fillStyle = 'rgba(255,255,255,.28)'; c.fill(); c.stroke();
-    c.strokeStyle = '#fff'; c.lineWidth = 2; c.beginPath(); c.moveTo(x + 8, gy - 33); c.lineTo(x + 38, gy - 33); c.stroke();
-    c.fillStyle = '#ffd23f'; c.beginPath(); c.arc(x + 23, gy - 33, 2.5, 0, Math.PI * 2); c.fill();
   } else {
-    c.fillStyle = '#6d4c41'; c.beginPath(); c.ellipse(x + 20, gy - 3, 16, 4, 0, 0, Math.PI * 2); c.fill();
-    c.fillStyle = '#8d6e63'; c.fillRect(x + 18, gy - 15, 4, 12);
     c.fillStyle = '#3aa0ff'; c.beginPath(); c.arc(x + 20, gy - 36, 20, 0, Math.PI * 2); c.fill();
-    c.fillStyle = '#4cd37b';
-    c.beginPath(); c.ellipse(x + 13, gy - 40, 7, 5, 0.4, 0, Math.PI * 2); c.fill();
-    c.beginPath(); c.ellipse(x + 26, gy - 30, 6, 7, -0.3, 0, Math.PI * 2); c.fill();
-    c.strokeStyle = '#8d6e63'; c.lineWidth = 2.5; c.beginPath(); c.arc(x + 20, gy - 36, 21.5, Math.PI * 1.15, Math.PI * 2.0); c.stroke();
-    c.strokeStyle = 'rgba(0,0,0,.4)'; c.lineWidth = 1.5; c.beginPath(); c.arc(x + 20, gy - 36, 20, 0, Math.PI * 2); c.stroke();
   }
 }
 
-/* ---------------- Phong cảnh ---------------- */
+/* ---------------- Phong cảnh & Vật thể bay ---------------- */
 function rand(a, b) { return a + Math.random() * (b - a); }
 function initScenery() {
   var i;
   clouds = [];
-  for (i = 0; i < 6; i++) clouds.push({ x: rand(0, W), y: rand(80, Math.max(120, groundY * 0.4)), s: rand(0.7, 1.4), v: rand(8, 22) });
+  for (i = 0; i < 6; i++) clouds.push({ x: rand(0, W), y: rand(60, groundY * 0.4), s: rand(0.7, 1.4), v: rand(8, 22) });
+  birds = [];
+  for (i = 0; i < 3; i++) birds.push({ x: rand(0, W), y: rand(50, groundY * 0.35), v: rand(35, 55), type: Math.random() > 0.5 ? 'bird' : 'paperplane' });
   pebbles = [];
-  var count = Math.round(40 * Math.max(1, (H - groundY) / 200));
-  for (i = 0; i < count; i++) pebbles.push({ x: rand(0, W + 60), y: Math.random(), w: rand(3, 8) });
+  for (i = 0; i < 30; i++) pebbles.push({ x: rand(0, W + 60), y: Math.random(), w: rand(3, 8) });
   decor = [];
   var x = rand(0, 200);
   while (x < W + 200) { decor.push({ x: x, k: (Math.random() * 3) | 0 }); x += rand(60, 200); }
@@ -600,9 +644,15 @@ function initScenery() {
 function moveScenery(dt, spd) {
   var i, d, mx;
   bgOff += spd * 0.25 * dt;
+  worldTime = (worldTime + dt * 0.02) % 1;
+
   for (i = 0; i < clouds.length; i++) {
     clouds[i].x -= (clouds[i].v + spd * 0.03) * dt;
-    if (clouds[i].x < -120) { clouds[i].x = W + rand(20, 200); clouds[i].y = rand(80, Math.max(120, groundY * 0.4)); }
+    if (clouds[i].x < -120) { clouds[i].x = W + rand(20, 200); clouds[i].y = rand(60, groundY * 0.4); }
+  }
+  for (i = 0; i < birds.length; i++) {
+    birds[i].x -= (birds[i].v + spd * 0.05) * dt;
+    if (birds[i].x < -60) { birds[i].x = W + rand(50, 300); birds[i].y = rand(40, groundY * 0.35); }
   }
   for (i = 0; i < pebbles.length; i++) {
     pebbles[i].x -= spd * dt;
@@ -615,123 +665,83 @@ function moveScenery(dt, spd) {
   }
 }
 function drawCloud(x, y, s) {
-  ctx.fillStyle = 'rgba(255,255,255,.92)'; ctx.beginPath();
+  ctx.fillStyle = worldTime > 0.6 ? 'rgba(200,210,240,.7)' : 'rgba(255,255,255,.92)';
+  ctx.beginPath();
   ctx.arc(x, y, 18 * s, 0, 7); ctx.arc(x + 22 * s, y - 8 * s, 22 * s, 0, 7); ctx.arc(x + 46 * s, y, 18 * s, 0, 7);
   ctx.rect(x, y, 46 * s, 18 * s); ctx.fill();
 }
-function drawSchool(x, roof, label) {
-  var c = ctx, y = groundY;
-  c.fillStyle = '#ffe9ad'; c.fillRect(x, y - 92, 230, 92);
-  c.fillStyle = roof; c.beginPath(); c.moveTo(x - 10, y - 92); c.lineTo(x + 30, y - 124); c.lineTo(x + 200, y - 124); c.lineTo(x + 240, y - 92); c.closePath(); c.fill();
-  c.fillStyle = '#fff'; rr(c, x + 40, y - 120, 150, 24, 6); c.fill();
-  c.strokeStyle = '#e63950'; c.lineWidth = 2; c.stroke();
-  c.fillStyle = '#e63950'; c.font = '900 13px sans-serif'; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(label, x + 115, y - 108);
-  c.fillStyle = '#8fd3ff';
-  for (var i = 0; i < 4; i++) { c.fillRect(x + 14 + i * 52, y - 78, 30, 26); }
-  c.fillStyle = '#a0522d'; c.fillRect(x + 98, y - 48, 34, 48);
-  c.fillStyle = '#ffd23f'; c.fillRect(x + 126, y - 24, 3, 4);
-  // cột cờ
-  c.fillStyle = '#7f8c8d'; c.fillRect(x + 215, y - 170, 3, 80);
-  c.fillStyle = '#da251d'; c.fillRect(x + 218, y - 168, 34, 22);
-  star(c, x + 235, y - 157, 7, '#ffde00');
-}
-function drawTrees(x) {
-  var c = ctx, y = groundY, i;
-  for (i = 0; i < 3; i++) {
-    var tx = x + i * 52, th = 40 + (i % 2) * 18;
-    c.fillStyle = '#8d6e63'; c.fillRect(tx + 10, y - th, 8, th);
-    c.fillStyle = '#4cc36f'; c.beginPath(); c.arc(tx + 14, y - th - 8, 24, 0, 7); c.arc(tx + 0, y - th + 4, 16, 0, 7); c.arc(tx + 28, y - th + 4, 16, 0, 7); c.fill();
+function drawBird(b) {
+  ctx.strokeStyle = worldTime > 0.6 ? '#fff' : '#333';
+  ctx.lineWidth = 2; ctx.beginPath();
+  if (b.type === 'bird') {
+    ctx.moveTo(b.x, b.y); ctx.lineTo(b.x + 8, b.y - 6); ctx.lineTo(b.x + 16, b.y);
+    ctx.moveTo(b.x + 16, b.y); ctx.lineTo(b.x + 24, b.y - 6); ctx.lineTo(b.x + 32, b.y);
+  } else {
+    ctx.fillStyle = '#fff'; ctx.beginPath();
+    ctx.moveTo(b.x, b.y); ctx.lineTo(b.x + 14, b.y + 4); ctx.lineTo(b.x + 4, b.y + 8); ctx.closePath(); ctx.fill();
   }
+  ctx.stroke();
 }
 function drawBackground() {
   var c = ctx, i, x;
+  var isNight = worldTime > 0.6;
   var g = c.createLinearGradient(0, 0, 0, groundY);
-  g.addColorStop(0, '#62c9ff'); g.addColorStop(1, '#eafaff');
+  if (isNight) {
+    g.addColorStop(0, '#0f172a'); g.addColorStop(1, '#1e293b');
+  } else {
+    g.addColorStop(0, '#62c9ff'); g.addColorStop(1, '#eafaff');
+  }
   c.fillStyle = g; c.fillRect(0, 0, W, groundY + 2);
-  // mặt trời
-  var sy = Math.max(120, groundY * 0.28), sx = W * 0.74;
-  c.fillStyle = 'rgba(255,236,120,.35)'; c.beginPath(); c.arc(sx, sy, 52, 0, 7); c.fill();
-  c.fillStyle = '#ffe066'; c.beginPath(); c.arc(sx, sy, 34, 0, 7); c.fill();
+
+  if (isNight) {
+    star(c, W * 0.2, 50, 4, '#fff'); star(c, W * 0.5, 30, 3, '#ffdf00'); star(c, W * 0.8, 70, 5, '#fff');
+    c.fillStyle = '#fef08a'; c.beginPath(); c.arc(W * 0.75, 60, 24, 0, 7); c.fill();
+  } else {
+    c.fillStyle = '#ffe066'; c.beginPath(); c.arc(W * 0.74, Math.max(120, groundY * 0.28), 34, 0, 7); c.fill();
+  }
+
   for (i = 0; i < clouds.length; i++) drawCloud(clouds[i].x, clouds[i].y, clouds[i].s);
-  // đồi
-  c.fillStyle = '#b8ecb0'; c.beginPath(); c.moveTo(0, groundY);
-  for (x = 0; x <= W; x += 16) c.lineTo(x, groundY - 46 - 20 * Math.sin((x + bgOff * 0.6) / 95) - 9 * Math.sin((x + bgOff * 0.6) / 37));
+  for (i = 0; i < birds.length; i++) drawBird(birds[i]);
+
+  c.fillStyle = isNight ? '#1e3a2f' : '#b8ecb0'; c.beginPath(); c.moveTo(0, groundY);
+  for (x = 0; x <= W; x += 16) c.lineTo(x, groundY - 46 - 20 * Math.sin((x + bgOff * 0.6) / 95));
   c.lineTo(W, groundY); c.closePath(); c.fill();
-  c.fillStyle = '#9fe39a'; c.beginPath(); c.moveTo(0, groundY);
-  for (x = 0; x <= W; x += 16) c.lineTo(x, groundY - 22 - 12 * Math.sin((x + bgOff * 1.1) / 70 + 2));
-  c.lineTo(W, groundY); c.closePath(); c.fill();
-  // trường học / cây
-  var period = 760, base = Math.floor(bgOff / period), off = bgOff % period;
-  for (var k = -1; k <= Math.ceil(W / period) + 1; k++) {
-    var idx = base + k, kind = (((idx % 3) + 3) % 3), px = k * period - off - 40;
-    if (kind === 0) drawSchool(px, '#e85d4a', 'LÊ HỒNG PHONG');
-    else if (kind === 1) drawTrees(px + 120);
-    else drawSchool(px, '#3b7dd8', 'LỚP 9D3 ♥ 20/11');
-  }
-  // mặt đất
+
   c.fillStyle = '#5cc65f'; c.fillRect(0, groundY, W, 10);
-  c.fillStyle = '#3fae48'; c.fillRect(0, groundY, W, 3);
   c.fillStyle = '#d9a066'; c.fillRect(0, groundY + 10, W, H - groundY);
-  c.fillStyle = '#c28650';
-  for (i = 0; i < pebbles.length; i++) {
-    var p = pebbles[i];
-    c.fillRect(p.x, groundY + 18 + p.y * Math.max(10, H - groundY - 24), p.w, 2.5);
-  }
-  // dòng ghi tên lớp trên mặt đất
-  c.font = '800 15px sans-serif'; c.textAlign = 'center'; c.textBaseline = 'middle';
-  c.fillStyle = 'rgba(255,255,255,.8)';
-  c.fillText('Lớp 9D3 – Trường Lê Hồng Phong', W / 2, groundY + 38);
-  // hoa trên cỏ
-  var cols = ['#ff5c8a', '#ffd23f', '#ffffff'];
-  for (i = 0; i < decor.length; i++) {
-    var d = decor[i];
-    c.strokeStyle = '#2e9d46'; c.lineWidth = 2; c.beginPath(); c.moveTo(d.x, groundY + 2); c.lineTo(d.x, groundY - 11); c.stroke();
-    c.fillStyle = cols[d.k]; c.beginPath(); c.arc(d.x, groundY - 13, 4.2, 0, 7); c.fill();
-    c.fillStyle = '#ff9f1c'; c.beginPath(); c.arc(d.x, groundY - 13, 1.6, 0, 7); c.fill();
+  c.font = '800 13px sans-serif'; c.textAlign = 'center'; c.textBaseline = 'middle';
+  c.fillStyle = 'rgba(255,255,255,.9)';
+  c.fillText('Lớp 9D3 Lê Hồng Phong', W / 2, groundY + 24);
+  c.fillText('chúc các thầy cô luôn mạnh khoẻ', W / 2, groundY + 40);
+  c.fillText('để vượt qua các chướng ngại vật thành công', W / 2, groundY + 56);
+}
+
+/* ---------------- Sinh Câu hỏi Voice (Toán, Văn, Anh) ---------------- */
+function generateQuestion() {
+  if (mode === 'math') {
+    var ops = ['+', '-', '*'];
+    var op = ops[(Math.random() * ops.length) | 0];
+    var a = 0, b = 0, ans = 0;
+    if (op === '+') { a = Math.floor(rand(2, 50)); b = Math.floor(rand(2, 50)); ans = a + b; }
+    else if (op === '-') { a = Math.floor(rand(10, 60)); b = Math.floor(rand(1, a)); ans = a - b; }
+    else { a = Math.floor(rand(2, 9)); b = Math.floor(rand(2, 9)); ans = a * b; }
+    return { text: a + ' ' + (op === '*' ? 'nhân' : op) + ' ' + b + ' = ?', answer: String(ans) };
+  } else if (mode === 'viet') {
+    var cand = WORD_LISTS.viet.filter(function (w) { return recentItems.indexOf(w) < 0; });
+    var w = cand[(Math.random() * cand.length) | 0];
+    recentItems.push(w); if (recentItems.length > 6) recentItems.shift();
+    return { text: 'Đọc: ' + w.toUpperCase(), answer: w };
+  } else {
+    var candE = WORD_LISTS.english.filter(function (w) { return recentItems.indexOf(w) < 0; });
+    var we = candE[(Math.random() * candE.length) | 0];
+    recentItems.push(we); if (recentItems.length > 6) recentItems.shift();
+    return { text: we.toUpperCase(), answer: we };
   }
 }
 
-/* ---------------- Âm thanh phát âm: so khớp từ ---------------- */
-function lev(a, b) {
-  var m = a.length, n = b.length, i, j, prev = [], cur;
-  for (j = 0; j <= n; j++) prev[j] = j;
-  for (i = 1; i <= m; i++) {
-    cur = [i];
-    for (j = 1; j <= n; j++) {
-      cur[j] = Math.min(prev[j] + 1, cur[j - 1] + 1, prev[j - 1] + (a.charAt(i - 1) === b.charAt(j - 1) ? 0 : 1));
-    }
-    prev = cur;
-  }
-  return prev[n];
-}
-function normTokens(s) {
-  var t = String(s || '').toLowerCase().replace(/[^a-z\s]/g, ' ').replace(/\s+/g, ' ').trim();
-  return t ? t.split(' ') : [];
-}
-function tokenMatch(t, target) {
-  if (t === target) return true;
-  if (target.length >= 4 && t === target + 's') return true;
-  if (target.length >= 6 && t.length >= 5 && lev(t, target) <= 1) return true;
-  return false;
-}
-function matchAny(alts, target) {
-  for (var i = 0; i < alts.length; i++) {
-    var toks = normTokens(alts[i]);
-    if (toks.join('') === target) return true;
-    for (var j = 0; j < toks.length; j++) if (tokenMatch(toks[j], target)) return true;
-  }
-  return false;
-}
-function pickWord() {
-  var cand = WORDS.filter(function (w) { return recentWords.indexOf(w) < 0; });
-  var w = cand[(Math.random() * cand.length) | 0];
-  recentWords.push(w); if (recentWords.length > 8) recentWords.shift();
-  return w;
-}
-
-/* ---------------- Voice engine ---------------- */
+/* ---------------- Voice engine & So khớp đáp án ---------------- */
 var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-var voice = { rec: null, wanted: false, running: false, starting: false, errCount: 0, restartTimer: null, startTimer: null, startFails: 0 };
+var voice = { rec: null, wanted: false, running: false, starting: false, errCount: 0, restartTimer: null, startTimer: null };
 
 function setMic(s) {
   var p = $('micPill');
@@ -743,12 +753,11 @@ function setHeard(txt) { $('heard').textContent = txt; }
 
 function makeRec() {
   var r = new SR();
-  r.lang = 'en-US';
+  r.lang = (mode === 'viet' || mode === 'math') ? 'vi-VN' : 'en-US';
   r.continuous = true;
   r.interimResults = true;
   r.maxAlternatives = 5;
-  r.onstart = function () { voice.running = true; voice.startFails = 0; setMic('on'); onVoiceReady(); };
-  r.onaudiostart = function () { voice.running = true; setMic('on'); onVoiceReady(); };
+  r.onstart = function () { voice.running = true; setMic('on'); onVoiceReady(); };
   r.onerror = onVoiceError;
   r.onend = function () {
     voice.running = false;
@@ -760,34 +769,25 @@ function makeRec() {
 function startRecognizer() {
   voice.wanted = true;
   if (!voice.rec) voice.rec = makeRec();
-  try { voice.rec.start(); } catch (e) { /* đã chạy rồi hoặc đang khởi động */ }
+  try { voice.rec.start(); } catch (e) {}
 }
 function scheduleRestart(ms) {
   clearTimeout(voice.restartTimer);
   voice.restartTimer = setTimeout(function () {
     if (!voice.wanted || !voice.rec) return;
-    try { voice.rec.start(); }
-    catch (e) {
-      voice.startFails++;
-      if (voice.startFails > 8) voiceFatal('Micro bị gián đoạn và không bật lại được. Hãy thử lại.');
-      else scheduleRestart(1000);
-    }
+    try { voice.rec.start(); } catch (e) { scheduleRestart(1000); }
   }, ms);
 }
 function stopVoice() {
-  voice.wanted = false; voice.running = false; voice.starting = false; voice.errCount = 0; voice.startFails = 0;
+  voice.wanted = false; voice.running = false; voice.starting = false;
   clearTimeout(voice.restartTimer); clearTimeout(voice.startTimer);
   var r = voice.rec; voice.rec = null;
-  if (r) {
-    r.onstart = r.onend = r.onerror = r.onresult = r.onaudiostart = null;
-    try { r.abort(); } catch (e) { try { r.stop(); } catch (e2) {} }
-  }
+  if (r) { try { r.abort(); } catch (e) {} }
   setMic('off');
 }
-function voiceFatal(msg, resetMic) {
+function voiceFatal(msg) {
   var wasStarting = (state === 'mic');
   stopVoice();
-  if (resetMic) micGranted = false;
   if (wasStarting) openMicCheck(msg); else goMenu(msg);
 }
 function onVoiceReady() {
@@ -800,56 +800,47 @@ function onVoiceReady() {
 function onVoiceError(ev) {
   var err = ev && ev.error;
   if (err === 'no-speech' || err === 'aborted') return;
-  if (err === 'not-allowed') { voiceFatal('Hãy bấm “Cho phép” khi Safari hỏi, rồi thử lại nhé!', true); return; }
-  if (err === 'service-not-allowed') { voiceFatal('Cần bật Đọc chính tả: Cài đặt › Cài đặt chung › Bàn phím › Đọc chính tả.', true); return; }
-  if (err === 'audio-capture') { voiceFatal('Không tìm thấy micro. Hãy kiểm tra rồi thử lại.', true); return; }
-  if (err === 'language-not-supported') { voiceFatal('Trình duyệt không hỗ trợ nhận diện tiếng Anh. Hãy thử Safari hoặc Chrome.'); return; }
   voice.errCount++;
   setMic('wait');
-  if (voice.starting || voice.errCount >= 4) {
-    voiceFatal('Không kết nối được dịch vụ nhận diện giọng nói (cần Internet). Hãy kiểm tra mạng rồi thử lại.');
-  }
+  if (voice.starting || voice.errCount >= 4) voiceFatal('Không kết nối được nhận diện giọng nói. Kiểm tra mạng hoặc micro.');
 }
 function onVoiceResult(ev) {
   voice.errCount = 0;
-  if (state !== 'playing' || mode !== 'voice') return;
+  if (state !== 'playing' || mode === 'normal') return;
   for (var i = ev.resultIndex; i < ev.results.length; i++) {
     var res = ev.results[i], alts = [], j;
-    for (j = 0; j < res.length; j++) alts.push(String(res[j].transcript || ''));
+    for (j = 0; j < res.length; j++) alts.push(String(res[j].transcript || '').toLowerCase().trim());
     if (!alts.length) continue;
-    if (alts[0].trim()) setHeard('Nghe được: “' + alts[0].trim() + '”');
+    if (alts[0]) setHeard('Nghe được: “' + alts[0] + '”');
     if (!activeObs) continue;
-    if (matchAny(alts, activeObs.word)) { voiceSuccess(); return; }
-    if (res.isFinal) {
-      judgeWrong(alts);
-      if (state !== 'playing') return;
+    
+    if (checkAnswerMatch(alts, activeObs.answer)) {
+      voiceSuccess(); return;
     }
   }
 }
-function judgeWrong(alts) {
-  var toks = normTokens(alts[0]);
-  var now = performance.now();
-  if (lastTarget && now - lastSuccessAt < 3500) {
-    toks = toks.filter(function (t) { return !tokenMatch(t, lastTarget); });
+function checkAnswerMatch(alts, target) {
+  for (var i = 0; i < alts.length; i++) {
+    var t = alts[i].replace(/[^0-9a-zàáảãạâấầẩẫậăắằẳẵặèéẻẽẹêếềểễệìíỉĩịòóỏõọôốồổỗộơớờởỡợùúủũụưứừửữựỳýỷỹỵđ\s]/g, '');
+    if (t.indexOf(target) >= 0 || target.indexOf(t) >= 0) return true;
   }
-  if (!toks.length) return;
-  gameOver('wrong', alts[0].trim());
+  return false;
 }
 function voiceSuccess() {
   var o = activeObs; if (!o) return;
-  o.armed = true; lastTarget = o.word; lastSuccessAt = performance.now();
-  activeObs = null; scoreF += 10;
+  o.armed = true; lastTarget = o.answer; lastSuccessAt = performance.now();
+  activeObs = null; scoreF += 15;
+  AudioEngine.sfxScore();
   $('wordCard').classList.add('ok');
-  $('wordLabel').textContent = '✔ ĐÚNG RỒI!';
+  $('wordLabel').textContent = '✔ CHÍNH XÁC!';
   setTimeout(function () { if (!activeObs) $('wordBox').style.display = 'none'; }, 500);
 }
 
-/* ---------------- Hiển thị từ (voice) ---------------- */
-function showWord(o) {
+function showQuestion(o) {
   activeObs = o;
   $('wordCard').classList.remove('ok');
-  $('wordLabel').textContent = '🎤 ĐỌC TO TỪ NÀY BẰNG TIẾNG ANH';
-  $('wordText').textContent = o.word;
+  $('wordLabel').textContent = mode === 'math' ? '🔢 ĐỌC ĐÁP ÁN PHÉP TÍNH' : (mode === 'viet' ? '📖 ĐỌC ĐÚNG CHÍNH TẢ L/N' : '🔤 ĐỌC TỪ TIẾNG ANH');
+  $('wordText').textContent = o.question;
   $('timeFill').style.width = '100%';
   $('timeFill').style.background = '#2ecc71';
   setHeard('Hãy đọc to…');
@@ -860,7 +851,7 @@ function hideWord() {
   $('wordBox').style.display = 'none';
 }
 
-/* ---------------- Màn hình / giao diện ---------------- */
+/* ---------------- Giao diện màn hình ---------------- */
 var screens = { start: $('startScreen'), mic: $('micScreen'), micCheck: $('micCheckScreen'), over: $('overScreen'), pause: $('pauseScreen') };
 function showScreen(name) {
   for (var k in screens) if (screens.hasOwnProperty(k)) screens[k].classList.remove('show');
@@ -868,21 +859,26 @@ function showScreen(name) {
 }
 function showStartError(msg) {
   var e = $('startError');
-  if (msg) { e.textContent = '⚠️ ' + msg; e.style.display = 'block'; } else { e.style.display = 'none'; e.textContent = ''; }
+  if (msg) { e.textContent = '⚠️ ' + msg; e.style.display = 'block'; } else { e.style.display = 'none'; }
 }
 function pad(n) { var s = String(n); while (s.length < 5) s = '0' + s; return s; }
 function updateHud() {
-  if (score !== shownScore) { $('scoreVal').textContent = pad(score); shownScore = score; }
+  if (score !== shownScore) {
+    if (score > 0 && score % 100 === 0 && score !== shownScore) AudioEngine.sfxScore();
+    $('scoreVal').textContent = pad(score);
+    shownScore = score;
+  }
 }
 function setupHud() {
   $('hud').style.display = 'block';
-  $('modeBadge').textContent = mode === 'voice' ? '🎤 VOICE' : 'NORMAL';
+  $('modeBadge').textContent = mode.toUpperCase();
   $('hsLabel').textContent = '🏆 HIGH SCORE';
   $('hsVal').textContent = pad(highScores[mode]);
-  $('micPill').style.display = mode === 'voice' ? 'inline-block' : 'none';
+  $('micPill').style.display = mode !== 'normal' ? 'inline-block' : 'none';
   shownScore = -1; updateHud();
 }
 function goMenu(msg) {
+  AudioEngine.stopBGM();
   stopVoice();
   state = 'menu';
   hideWord();
@@ -897,149 +893,129 @@ function resetPlayer() { player.y = 0; player.vy = 0; player.onGround = true; ju
 function beginGame() {
   showScreen(null);
   showStartError('');
-  obstacles = []; recentWords = []; activeObs = null; lastTarget = '';
+  obstacles = []; recentItems = []; activeObs = null; lastTarget = '';
   scoreF = 0; score = 0; speed = CFG[mode].base; nextGap = 0;
   resetPlayer(); newRecord = false;
   hideWord();
   setupHud();
-  if (mode === 'voice') setMic(voice.running ? 'on' : 'wait');
+  if (mode !== 'normal') setMic(voice.running ? 'on' : 'wait');
   state = 'playing';
   lastTs = 0;
+  AudioEngine.startBGM();
 }
 function startMode(m) {
   mode = m;
   showStartError('');
   if (m === 'normal') { stopVoice(); beginGame(); return; }
-  // Voice mode
-  if (!SR) { showStartError('Trình duyệt này chưa hỗ trợ Voice Mode. Hãy mở bằng Safari (iPhone) hoặc Chrome, hoặc chơi Normal Mode.'); return; }
-  if (!window.isSecureContext) { showStartError('Voice Mode cần mở trang bằng HTTPS (đường dẫn bắt đầu bằng https://).'); return; }
+  if (!SR) { showStartError('Trình duyệt chưa hỗ trợ Voice. Hãy mở bằng Chrome hoặc Safari.'); return; }
+  if (!window.isSecureContext) { showStartError('Voice Mode cần chạy trên HTTPS.'); return; }
   if (voice.running && voice.wanted) { beginGame(); return; }
-  if (!micGranted) { openMicCheck(''); return; }
-  beginVoiceStart();
+  openMicCheck('');
 }
 
-/* ----- Bật micro trước khi chơi Voice Mode ----- */
-var micGranted = false, micFails = 0;
+var micGranted = false;
 function openMicCheck(msg) {
-  state = 'menu';
-  hideWord();
-  $('hud').style.display = 'none';
+  state = 'menu'; hideWord(); $('hud').style.display = 'none';
   showScreen('micCheck');
   var st = $('micCheckStatus'), b = $('btnMicEnable');
   b.disabled = false;
-  if (micGranted) { st.textContent = msg || '✅ Micro đã sẵn sàng!'; b.textContent = '▶ BẮT ĐẦU CHƠI'; }
+  if (micGranted) { st.textContent = '✅ Micro đã sẵn sàng!'; b.textContent = '▶ BẮT ĐẦU CHƠI'; }
   else { st.textContent = msg || ''; b.textContent = '🎤 BẬT MICRO'; }
 }
 function requestMic() {
   var b = $('btnMicEnable'), st = $('micCheckStatus');
-  var md = (typeof navigator !== 'undefined') ? navigator.mediaDevices : null;
+  var md = navigator.mediaDevices;
   if (!md || !md.getUserMedia) { micGranted = true; beginVoiceStart(); return; }
-  b.disabled = true; b.textContent = 'Đang bật micro…'; st.textContent = '';
+  b.disabled = true; b.textContent = 'Đang bật micro…';
   md.getUserMedia({ audio: true }).then(function (stream) {
     try { stream.getTracks().forEach(function (t) { t.stop(); }); } catch (e) {}
-    micGranted = true; micFails = 0;
-    openMicCheck('');
-  }).catch(function (err) {
-    micFails++;
+    micGranted = true; openMicCheck('');
+  }).catch(function () {
     b.disabled = false; b.textContent = '🎤 BẬT MICRO';
-    var n = err && err.name;
-    if (n === 'NotFoundError' || n === 'DevicesNotFoundError') st.textContent = 'Không tìm thấy micro trên thiết bị này.';
-    else {
-      st.textContent = 'Hãy bấm “BẬT MICRO” rồi chọn “Cho phép” nhé!';
-      if (micFails >= 2) st.textContent += ' Mẹo: Safari › biểu tượng “aA” › Cài đặt trang web › Micro › Cho phép.';
-    }
+    st.textContent = 'Không bật được micro. Hãy kiểm tra quyền truy cập.';
   });
 }
 function beginVoiceStart() {
-  state = 'mic';
-  showScreen('mic');
+  state = 'mic'; showScreen('mic');
   voice.starting = true;
   clearTimeout(voice.startTimer);
   voice.startTimer = setTimeout(function () {
-    if (voice.starting) voiceFatal('Micro chưa phản hồi. Hãy thử lại nhé!', true);
-  }, 20000);
+    if (voice.starting) voiceFatal('Micro không phản hồi.');
+  }, 15000);
   startRecognizer();
 }
 
 function pauseGame() {
   if (state !== 'playing') return;
   state = 'paused';
+  AudioEngine.stopBGM();
   showScreen('pause');
 }
 function resumeGame() {
   if (state !== 'paused') return;
-  showScreen(null);
-  state = 'playing';
-  lastTs = 0;
-  if (mode === 'voice' && SR && !voice.running) { voice.wanted = true; if (!voice.rec) voice.rec = makeRec(); try { voice.rec.start(); } catch (e) {} }
+  showScreen(null); state = 'playing'; lastTs = 0;
+  AudioEngine.startBGM();
+  if (mode !== 'normal' && SR && !voice.running) { voice.wanted = true; if (!voice.rec) voice.rec = makeRec(); try { voice.rec.start(); } catch (e) {} }
 }
-function gameOver(reason, detail) {
+function gameOver(reason) {
   if (state !== 'playing') return;
   state = 'dying'; deadT = 0;
-  var word = activeObs ? activeObs.word : '';
+  AudioEngine.sfxOver();
   hideWord();
   player.vy = 320; player.onGround = false;
   if (score > highScores[mode]) { highScores[mode] = score; saveHS(mode, score); newRecord = true; }
-  if (reason === 'wrong') overReasonText = 'Bạn đọc “' + detail + '” nhưng cần đọc “' + word + '”. Đọc sai là thua ngay!';
-  else if (mode === 'voice') overReasonText = 'Không đọc kịp trước khi va vào chướng ngại vật!';
-  else overReasonText = 'Thầy/cô vấp phải đồ dùng học tập rồi!';
+  if (reason === 'wrong') overReasonText = 'Bạn đọc sai đáp án cần thiết!';
+  else overReasonText = 'Không vượt qua được chướng ngại vật!';
 }
 function showOver() {
-  state = 'over';
-  overAt = performance.now();
+  state = 'over'; overAt = performance.now();
   $('overReason').textContent = overReasonText;
   $('overScore').textContent = String(score);
   $('overHigh').textContent = String(highScores[mode]);
-  $('overHsLabel').textContent = 'HIGH SCORE · ' + (mode === 'voice' ? 'VOICE' : 'NORMAL');
+  $('overHsLabel').textContent = 'HIGH SCORE · ' + mode.toUpperCase();
   $('overNew').style.display = newRecord ? 'block' : 'none';
   showScreen('over');
 }
 
-/* ---------------- Nhảy ---------------- */
 function doJump() {
-  if (player.onGround) { player.vy = V0; player.onGround = false; return true; }
+  if (player.onGround) {
+    player.vy = V0; player.onGround = false;
+    AudioEngine.sfxJump();
+    return true;
+  }
   return false;
 }
 function requestJump() {
-  if (state !== 'playing') return;
-  if (mode !== 'normal') return; // Voice Mode: không cho chạm / bấm phím
+  if (state !== 'playing' || mode !== 'normal') return;
   if (!doJump()) jumpBuffer = 0.12;
 }
 
-/* ---------------- Cập nhật ---------------- */
+/* ---------------- Cập nhật Game & Độ khó tăng dần ---------------- */
 function computeGap() {
-  return mode === 'voice' ? speed * rand(2.7, 3.7) : speed * rand(0.9, 1.85);
+  return mode !== 'normal' ? speed * rand(2.8, 3.8) : speed * rand(0.9, 1.85);
 }
 function update(dt) {
   var cfg = CFG[mode], i, o;
   speed = Math.min(cfg.max, cfg.base + score * cfg.inc);
 
-  // vật lý nhân vật
   if (!player.onGround) {
-    player.vy -= G * dt;
-    player.y += player.vy * dt;
-    if (player.y <= 0) {
-      player.y = 0; player.vy = 0; player.onGround = true;
-      if (jumpBuffer > 0) { jumpBuffer = 0; doJump(); }
-    }
+    player.vy -= G * dt; player.y += player.vy * dt;
+    if (player.y <= 0) { player.y = 0; player.vy = 0; player.onGround = true; if (jumpBuffer > 0) { jumpBuffer = 0; doJump(); } }
   }
   if (jumpBuffer > 0) jumpBuffer = Math.max(0, jumpBuffer - dt);
   runT += dt;
 
-  // thế giới
   moveScenery(dt, speed);
   for (i = 0; i < obstacles.length; i++) {
-    o = obstacles[i];
-    o.x -= speed * dt;
+    o = obstacles[i]; o.x -= speed * dt;
     if (!o.done && o.x + o.w < playerX + HIT_L) o.done = true;
   }
   while (obstacles.length && obstacles[0].x + obstacles[0].w < -30) obstacles.shift();
 
-  // sinh chướng ngại vật
   var last = obstacles[obstacles.length - 1];
   if (!last || (W - (last.x + last.w)) >= nextGap) {
     var sx = W + 10;
-    if (mode === 'voice') sx = Math.max(sx, playerX + HIT_R + speed * 3.0);
+    if (mode !== 'normal') sx = Math.max(sx, playerX + HIT_R + speed * 3.0);
     obstacles.push(makeObstacle(sx));
     nextGap = computeGap();
   }
@@ -1047,10 +1023,8 @@ function update(dt) {
   scoreF += speed * dt * 0.03;
   score = Math.floor(scoreF);
 
-  // Voice logic
-  if (mode === 'voice') voiceLogic();
+  if (mode !== 'normal') voiceGameLogic();
 
-  // va chạm
   var pl = playerX + HIT_L, pr = playerX + HIT_R, pb = groundY - player.y, pt = pb - HIT_H;
   for (i = 0; i < obstacles.length; i++) {
     o = obstacles[i];
@@ -1059,7 +1033,8 @@ function update(dt) {
   }
   updateHud();
 }
-function voiceLogic() {
+
+function voiceGameLogic() {
   var cur = null, i;
   for (i = 0; i < obstacles.length; i++) if (!obstacles[i].done) { cur = obstacles[i]; break; }
   if (activeObs && activeObs.done) hideWord();
@@ -1071,10 +1046,12 @@ function voiceLogic() {
       if (gap <= Math.max(tg, 0) && player.onGround) { doJump(); cur.jumped = true; }
     }
   } else {
-    if (!cur.word) {
-      cur.word = pickWord();
-      cur.t0 = Math.max(0.5, gap / speed);
-      showWord(cur);
+    if (!cur.question) {
+      var q = generateQuestion();
+      cur.question = q.text;
+      cur.answer = q.answer;
+      cur.t0 = Math.max(0.6, gap / speed);
+      showQuestion(cur);
     }
     if (activeObs === cur) {
       var left = Math.max(0, gap / speed), ratio = Math.min(1, left / cur.t0);
@@ -1084,16 +1061,14 @@ function voiceLogic() {
     }
   }
 }
+
 function updateDying(dt) {
   deadT += dt;
-  if (!player.onGround) {
-    player.vy -= G * dt; player.y += player.vy * dt;
-    if (player.y <= 0) { player.y = 0; player.vy = 0; player.onGround = true; }
-  }
+  if (!player.onGround) { player.vy -= G * dt; player.y += player.vy * dt; if (player.y <= 0) { player.y = 0; player.vy = 0; player.onGround = true; } }
   if (deadT > 0.95) showOver();
 }
 
-/* ---------------- Vẽ ---------------- */
+/* ---------------- Render ---------------- */
 function render() {
   ctx.setTransform(dpr * scale, 0, 0, dpr * scale, 0, 0);
   drawBackground();
@@ -1102,31 +1077,23 @@ function render() {
   for (i = 0; i < obstacles.length; i++) drawObstacle(obstacles[i]);
   var feetY = groundY - player.y, dead = (state === 'dying' || state === 'over');
   if (dead) {
-    ctx.save();
-    ctx.translate(playerX + PW / 2, feetY - PH / 2);
-    ctx.rotate(-0.3 * Math.min(1, deadT * 4));
+    ctx.save(); ctx.translate(playerX + PW / 2, feetY - PH / 2); ctx.rotate(-0.3);
     drawPerson(ctx, charType, 0, PH / 2, runT, 'dead');
     ctx.restore();
-    ctx.font = '16px sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-    for (i = 0; i < 3; i++) {
-      var a = tAnim * 6 + i * 2.094;
-      ctx.fillStyle = '#ffc107';
-      ctx.fillText('★', playerX + PW / 2 + Math.cos(a) * 18, feetY - 94 + Math.sin(a) * 5);
-    }
   } else {
     drawPerson(ctx, charType, playerX + PW / 2, feetY, runT, player.onGround ? 'run' : 'jump');
   }
 }
 
-/* ---------------- Xem trước nhân vật ở menu ---------------- */
+/* ---------------- Menu Preview ---------------- */
 var pv = { male: $('pvMale').getContext('2d'), female: $('pvFemale').getContext('2d') };
 function drawPreview(type) {
   var c = pv[type];
   c.setTransform(2, 0, 0, 2, 0, 0);
-  c.clearRect(0, 0, 110, 130);
+  c.clearRect(0, 0, 100, 120);
   c.fillStyle = type === charType ? '#fff1b8' : '#eaf6ff';
-  c.beginPath(); c.arc(55, 62, 50, 0, 7); c.fill();
-  c.save(); c.translate(55, 112); c.scale(1.3, 1.3);
+  c.beginPath(); c.arc(50, 58, 45, 0, 7); c.fill();
+  c.save(); c.translate(50, 100); c.scale(1.1, 1.1);
   drawPerson(c, type, 0, 0, tAnim, 'idle');
   c.restore();
 }
@@ -1141,7 +1108,7 @@ function frame(ts) {
   window.requestAnimationFrame(frame);
   if (!lastTs) lastTs = ts;
   var dt = (ts - lastTs) / 1000; lastTs = ts;
-  if (dt > 0.05) dt = 0.05; if (dt < 0) dt = 0;
+  if (dt > 0.05) dt = 0.05;
   tAnim += dt;
   if (state === 'playing') update(dt);
   else if (state === 'dying') updateDying(dt);
@@ -1150,85 +1117,53 @@ function frame(ts) {
   if (state === 'menu') { drawPreview('male'); drawPreview('female'); }
 }
 
-/* ---------------- Kích thước màn hình ---------------- */
 function resize() {
-  vw = window.innerWidth || document.documentElement.clientWidth || 800;
-  vh = window.innerHeight || document.documentElement.clientHeight || 400;
+  vw = window.innerWidth || 800; vh = window.innerHeight || 400;
   dpr = Math.min(window.devicePixelRatio || 1, 2);
   canvas.width = Math.round(vw * dpr); canvas.height = Math.round(vh * dpr);
   canvas.style.width = vw + 'px'; canvas.style.height = vh + 'px';
-  var newPortrait = vh > vw;
-  var newW = newPortrait ? 520 : 800;
-  var changed = newW !== W;
-  portrait = newPortrait; W = newW; scale = vw / W; H = vh / scale;
+  portrait = vh > vw; W = portrait ? 520 : 800; scale = vw / W; H = vh / scale;
   groundY = portrait ? Math.round(H * 0.62) : Math.max(Math.round(H - 64), 220);
   playerX = Math.round(W * 0.13);
-  if (changed || !clouds.length) {
-    initScenery();
-    if (state === 'playing') pauseGame();
-  }
+  initScenery();
 }
 
-/* ---------------- Sự kiện ---------------- */
-function inScreen(el) {
-  while (el && el !== document.body) { if (el.classList && el.classList.contains('screen')) return true; el = el.parentNode; }
-  return false;
-}
-var hintTimer = 0;
+/* ---------------- Sự kiện DOM ---------------- */
 document.getElementById('app').addEventListener('pointerdown', function (e) {
-  if (inScreen(e.target)) return;
-  if (state !== 'playing') return;
-  e.preventDefault();
-  if (mode === 'normal') requestJump();
-  else if (mode === 'voice' && performance.now() - hintTimer > 1500) {
-    hintTimer = performance.now();
-    if (activeObs) setHeard('Voice Mode: không chạm để nhảy – hãy đọc to từ tiếng Anh!');
-  }
+  if (e.target && e.target.id === 'btnMute') return;
+  if (state === 'playing' && mode === 'normal') { e.preventDefault(); requestJump(); }
 });
 document.addEventListener('keydown', function (e) {
-  var k = e.code || e.key;
-  if (k === 'Space' || k === ' ' || k === 'ArrowUp' || k === 'KeyW') {
-    if (e.target && e.target.tagName === 'BUTTON' && state !== 'playing') return;
-    if (state === 'playing') { e.preventDefault(); if (mode === 'normal') requestJump(); }
+  if ((e.code === 'Space' || e.key === ' ') && state === 'playing' && mode === 'normal') {
+    e.preventDefault(); requestJump();
   }
 });
-document.addEventListener('touchmove', function (e) { if (!inScreen(e.target)) e.preventDefault(); }, { passive: false });
-['gesturestart', 'gesturechange', 'gestureend'].forEach(function (n) {
-  document.addEventListener(n, function (e) { e.preventDefault(); });
-});
-document.addEventListener('contextmenu', function (e) { e.preventDefault(); });
-document.addEventListener('visibilitychange', function () { if (document.hidden) pauseGame(); });
 window.addEventListener('resize', resize);
-window.addEventListener('orientationchange', function () { setTimeout(resize, 250); });
 
+$('btnMute').addEventListener('click', function (e) {
+  e.stopPropagation();
+  AudioEngine.toggleMute();
+});
 $('cardMale').addEventListener('click', function () { selectChar('male'); });
 $('cardFemale').addEventListener('click', function () { selectChar('female'); });
 $('btnNormal').addEventListener('click', function () { startMode('normal'); });
-$('btnVoice').addEventListener('click', function () { startMode('voice'); });
+$('btnMath').addEventListener('click', function () { startMode('math'); });
+$('btnViet').addEventListener('click', function () { startMode('viet'); });
+$('btnEnglish').addEventListener('click', function () { startMode('english'); });
 $('btnMicCancel').addEventListener('click', function () { stopVoice(); goMenu(''); });
 $('btnMicEnable').addEventListener('click', function () {
   if (micGranted) beginVoiceStart(); else requestMic();
 });
 $('btnMicBack').addEventListener('click', function () { goMenu(''); });
-$('btnRetry').addEventListener('click', function () {
-  if (state !== 'over' || performance.now() - overAt < 450) return;
-  startMode(mode);
-});
-$('btnHome1').addEventListener('click', function () {
-  if (state !== 'over' || performance.now() - overAt < 450) return;
-  goMenu('');
-});
+$('btnRetry').addEventListener('click', function () { if (state === 'over') startMode(mode); });
+$('btnHome1').addEventListener('click', function () { goMenu(''); });
 $('btnResume').addEventListener('click', resumeGame);
 $('btnHome2').addEventListener('click', function () { goMenu(''); });
 
-/* ---------------- Khởi động ---------------- */
 function init() {
-  resize();
-  selectChar(charType);
-  var w = $('voiceWarn'), msg = '';
-  if (!SR) msg = 'Trình duyệt này chưa hỗ trợ Voice Mode. Hãy dùng Safari (iPhone) hoặc Chrome để chơi Voice Mode.';
-  else if (!window.isSecureContext) msg = 'Voice Mode cần mở trang bằng HTTPS (đường dẫn bắt đầu bằng https://).';
-  if (msg) { w.textContent = '⚠️ ' + msg; w.style.display = 'block'; $('btnVoice').className = 'btn pink dim'; }
+  resize(); selectChar(charType);
+  var w = $('voiceWarn');
+  if (!SR) { w.textContent = '⚠️ Trình duyệt chưa hỗ trợ Voice Mode.'; w.style.display = 'block'; }
   window.requestAnimationFrame(frame);
 }
 init();

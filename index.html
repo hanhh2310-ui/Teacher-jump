@@ -449,9 +449,7 @@ function eye(c, x, y, dead, female, blink) {
   c.beginPath(); c.arc(x - 0.9, y + 1.5, 0.5, 0, Math.PI * 2); c.fill();
   if (female) {
     c.strokeStyle = '#1a1118'; c.lineWidth = 1.1;
-    c.beginPath(); c.moveTo(x - 2.8, y - 1.6); c.quadraticCurveTo(x - 1, y - 4.4, x + 2.6, y - 3.4); c.stroke();
-    c.lineWidth = 1;
-    c.beginPath(); c.moveTo(x + 2.2, y - 3.3); c.lineTo(x + 3.9, y - 4.6); c.stroke();
+    c.beginPath(); c.moveTo(x + 2, y - 3); c.lineTo(x + 3.8, y - 4.4); c.stroke();
   }
 }
 function brow(c, x, y, dead, female) {
@@ -517,7 +515,10 @@ function drawHairFemaleBack(c, cx, cy, sw) {
   c.moveTo(cx - 3, cy - 14);
   c.bezierCurveTo(cx - 25, cy - 14, cx - 27 + sw * 2, cy + 12, cx - 19 + sw * 3, cy + 35);
   c.bezierCurveTo(cx - 15 + sw * 3, cy + 42, cx - 8 + sw * 2, cy + 40, cx - 6 + sw * 2, cy + 31);
+  c.bezierCurveTo(cx - 5, cy + 20, cx - 3, cy + 8, cx + 1, cy + 2);
   c.closePath(); c.fill();
+  c.strokeStyle = 'rgba(150,140,200,.35)'; c.lineWidth = 1.6; c.lineCap = 'round';
+  c.beginPath(); c.moveTo(cx - 14, cy - 2); c.bezierCurveTo(cx - 20 + sw, cy + 10, cx - 17 + sw * 2, cy + 22, cx - 14 + sw * 3, cy + 32); c.stroke();
 }
 function drawHairFemaleFront(c, cx, cy) {
   c.fillStyle = '#17141f';
@@ -525,13 +526,20 @@ function drawHairFemaleFront(c, cx, cy) {
   c.moveTo(cx - 13.8, cy + 7);
   c.bezierCurveTo(cx - 20, cy - 10, cx - 7, cy - 23, cx + 5, cy - 20);
   c.bezierCurveTo(cx + 15, cy - 18, cx + 18.5, cy - 8, cx + 15.5, cy - 0.5);
+  c.bezierCurveTo(cx + 13.5, cy - 8, cx + 6, cy - 12.5, cx - 1, cy - 11);
+  c.bezierCurveTo(cx - 7, cy - 9.5, cx - 10, cy - 2, cx - 9.6, cy + 7);
   c.closePath(); c.fill();
-  var fx = cx - 6, fy = cy - 13;
+  // ánh tóc
+  c.strokeStyle = 'rgba(170,160,230,.6)'; c.lineWidth = 1.7; c.lineCap = 'round';
+  c.beginPath(); c.moveTo(cx - 8, cy - 15); c.quadraticCurveTo(cx, cy - 20.5, cx + 9, cy - 17); c.stroke();
+  // cài hoa
+  var fx = cx - 6, fy = cy - 13, k;
   c.fillStyle = '#ff8fb3';
-  for (var k = 0; k < 5; k++) {
+  for (k = 0; k < 5; k++) {
     var a = k * Math.PI * 2 / 5 - Math.PI / 2;
     c.beginPath(); c.arc(fx + Math.cos(a) * 2.6, fy + Math.sin(a) * 2.6, 1.9, 0, Math.PI * 2); c.fill();
   }
+  c.fillStyle = '#ffd23f'; c.beginPath(); c.arc(fx, fy, 1.6, 0, Math.PI * 2); c.fill();
 }
 function drawPerson(c, type, cx, fy, t, pose) {
   c.save();
@@ -578,19 +586,44 @@ function drawMale(c, P) {
 }
 function drawFemale(c, P) {
   var h, f, cx = 2, sw = P.sw, hip = P.hipY, sh = P.shY;
+  // tóc dài phía sau
   drawHairFemaleBack(c, cx, P.headY, sw);
+  // tay sau (tay áo dài)
   h = limb(c, 0, sh + 4, P.AL, P.s2, 7, '#ee5f90', '#b8325c'); hand(c, h);
+  // chân (quần lụa trắng) + giày
   f = limb(c, 0, hip, P.L, P.a2, 8.4, '#fbfbff', '#cfd3e6');
+  c.fillStyle = '#ffb0c8'; c.beginPath(); c.ellipse(f[0] + 2.5, f[1] + 1.5, 6, 3.2, 0, 0, Math.PI * 2); c.fill();
   f = limb(c, 0, hip, P.L, P.a1, 8.4, '#ffffff', '#cfd3e6');
+  c.fillStyle = '#ffb0c8'; c.beginPath(); c.ellipse(f[0] + 2.5, f[1] + 1.5, 6, 3.2, 0, 0, Math.PI * 2); c.fill();
+  // vạt sau
   c.fillStyle = '#ee5f90';
   c.beginPath(); c.moveTo(-9.5, hip - 3); c.lineTo(-13 - sw * 0.7, hip + 22); c.lineTo(1.5, hip + 22); c.lineTo(1.5, hip - 3); c.closePath(); c.fill();
+  // thân áo dài (ôm eo)
   c.fillStyle = '#ff7aa8';
-  c.beginPath(); c.moveTo(-10.5, sh + 3); c.quadraticCurveTo(-10.5, sh - 1, -7, sh - 1); c.lineTo(7, sh - 1); c.quadraticCurveTo(10.5, sh - 1, 10.5, sh + 3); c.lineTo(9.5, hip - 2); c.lineTo(-9.5, hip - 2); c.closePath(); c.fill();
+  c.beginPath();
+  c.moveTo(-10.5, sh + 3); c.quadraticCurveTo(-10.5, sh - 1, -7, sh - 1); c.lineTo(7, sh - 1); c.quadraticCurveTo(10.5, sh - 1, 10.5, sh + 3);
+  c.quadraticCurveTo(10.5, sh + 11, 7.6, sh + 14); c.quadraticCurveTo(10, sh + 19, 9.5, hip - 2);
+  c.lineTo(-9.5, hip - 2); c.quadraticCurveTo(-10, sh + 19, -7.6, sh + 14); c.quadraticCurveTo(-10.5, sh + 11, -10.5, sh + 3);
+  c.closePath(); c.fill();
+  // vạt trước
+  c.beginPath(); c.moveTo(-1.5, hip - 3); c.lineTo(sw * 0.9, hip + 22); c.lineTo(15 + sw, hip + 22); c.lineTo(9.8, hip - 3); c.closePath(); c.fill();
+  // viền vàng + hoa văn
+  c.strokeStyle = '#ffe08a'; c.lineWidth = 1.5; c.lineCap = 'round';
+  c.beginPath(); c.moveTo(sw * 0.9, hip + 21); c.lineTo(15 + sw, hip + 21); c.stroke();
+  c.beginPath(); c.moveTo(-13 - sw * 0.7, hip + 21); c.lineTo(1.5, hip + 21); c.stroke();
+  c.beginPath(); c.moveTo(-1.5, hip - 2); c.lineTo(sw * 0.9, hip + 21); c.stroke();
+  c.fillStyle = '#fff';
+  var fl = [[-3, sh + 8], [4, sh + 12], [-1, sh + 17], [7 + sw * 0.4, hip + 9], [11 + sw * 0.6, hip + 16], [3 + sw * 0.5, hip + 15]], i;
+  for (i = 0; i < fl.length; i++) { c.beginPath(); c.arc(fl[i][0], fl[i][1], 1.6, 0, Math.PI * 2); c.fill(); }
+  // cổ trụ
+  c.fillStyle = '#ff7aa8'; c.strokeStyle = '#ffe08a'; c.lineWidth = 1.2;
+  rr(c, -4.5, sh - 4, 9.5, 6.4, 2.6); c.fill(); c.stroke();
+  // tay trước
   h = limb(c, 0, sh + 4, P.AL, P.s1, 7, '#ff7aa8', '#b8325c'); hand(c, h);
+  // đầu + tóc
   drawHead(c, cx, P.headY, P, true);
   drawHairFemaleFront(c, cx, P.headY);
 }
-
 /* ---------------- Chướng ngại vật & Vật thể bay ---------------- */
 var BOOK_COLORS = ['#e74c3c', '#3498db', '#27ae60', '#f39c12', '#9b59b6', '#16a085'];
 function makeObstacle(x) {

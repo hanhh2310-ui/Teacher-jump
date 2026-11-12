@@ -52,6 +52,7 @@ html,body{
 #wordCard{background:#fff;border:4px solid var(--red);border-radius:20px;padding:8px 16px 10px;box-shadow:0 6px 0 rgba(43,45,91,.35)}
 #wordCard.ok{border-color:var(--green);background:#eaffef}
 #wordLabel{font-size:12px;font-weight:800;color:#777}
+#wordText.long{font-size:clamp(20px,5.6vw,28px);word-break:normal}
 #wordText{font-size:clamp(26px,7vw,42px);font-weight:900;color:var(--red);line-height:1.1;word-break:break-all}
 #wordCard.ok #wordText{color:#1e9e52}
 #timeBar{height:8px;background:#e6e6ef;border-radius:6px;overflow:hidden;margin-top:6px}
@@ -146,7 +147,7 @@ h1{margin:0;font-size:clamp(28px,8vw,42px);line-height:1;color:var(--red);letter
       </div>
 
       <div class="sectionTitle">CHỌN CHẾ ĐỘ CHƠI</div>
-      <button class="btn blue" id="btnNormal" type="button">▶ NORMAL MODE<small>Chạm màn hình hoặc phím Space để nhảy</small></button>
+      <button class="btn blue" id="btnNormal" type="button">▶ NORMAL MODE<small>Chạm / Space để nhảy · Vuốt xuống / ↓ để cúi</small></button>
       <button class="btn green" id="btnMath" type="button">🔢 VOICE: MÔN TOÁN<small>Đọc đáp án phép tính cộng trừ nhân chia</small></button>
       <button class="btn orange" id="btnViet" type="button">📖 VOICE: MÔN VĂN<small>Đọc từ chính tả phân biệt L và N</small></button>
       <button class="btn pink" id="btnEnglish" type="button">🔤 VOICE: MÔN ANH<small>Đọc từ vựng tiếng Anh trường học</small></button>
@@ -357,18 +358,20 @@ var JUMP_H = 135;
 var V0 = Math.sqrt(2 * G * JUMP_H);
 var AIR = 2 * V0 / G;
 var PW = 44, PH = 80;
-var HIT_L = 10, HIT_R = 34, HIT_H = 68;
+var HIT_L = 10, HIT_R = 34, HIT_H = 68, HIT_D = 40; // HIT_D: chiều cao khi cúi
 
 var CFG = {
   normal:  { base: 300, max: 620, inc: 0.35 },
-  math:    { base: 140, max: 220, inc: 0.04 },
-  viet:    { base: 140, max: 220, inc: 0.04 },
-  english: { base: 140, max: 220, inc: 0.04 }
+  math:    { base: 140, max: 140, inc: 0 },
+  viet:    { base: 140, max: 140, inc: 0 },
+  english: { base: 140, max: 140, inc: 0 }
 };
 
 var WORD_LISTS = {
   english: ['teacher','student','school','book','pencil','class','lesson','homework','notebook','ruler','library','study','learn','reading','writing','happy','flower','gift','respect','knowledge','english','science','history','music','eraser','answer','question','grammar','listen','speak','grateful','wisdom'],
-  viet: ['long lanh','nức nở','long trọng','nông nổi','lên lớp','nói năng','làm lụng','nấu nướng','la cà','no đủ','lấp lánh','na ná','lững lờ','nhao nhác','lấm lét','nũng nịu','long tuột','nặng nề','lan man','nền nã','lợi lộc','nản lòng']
+  viet1: ['lên lớp','la cà','no đủ','nói năng','làm lụng','nấu nướng','lợi lộc','nản lòng','lan man'],
+  viet2: ['long lanh','nức nở','lấp lánh','na ná','lững lờ','nhao nhác','lấm lét','nũng nịu','nặng nề','nền nã','long trọng','nông nổi'],
+  viet3: ['Thầy cô luôn mạnh khoẻ','Vượt qua mọi chướng ngại vật','Chào mừng ngày nhà giáo','Lớp em nhớ ơn thầy cô','Nắng long lanh trên lớp học','Lời cô giảng nâng bước em']
 };
 
 /* ---------------- Trạng thái ---------------- */
@@ -388,6 +391,7 @@ var activeObs = null, lastTarget = '', lastSuccessAt = 0, recentItems = [];
 var overAt = 0, newRecord = false, overReasonText = '';
 var lastTs = 0;
 var worldTime = 0;
+var nextPlane = false, duckTimer = 0, duckKey = false, touchDuck = false, vietDone = 0;
 
 /* ---------------- Tiện ích vẽ ---------------- */
 function rr(c, x, y, w, h, r) {
@@ -607,7 +611,32 @@ function makeObstacle(x) {
   }
   return o;
 }
+function makePlane(x) {
+  return { type: 'plane', fly: true, x: x, w: 52, h: 24, yb: 50, top: 70, bot: 47, ph: Math.random() * 6.28,
+           done: false, armed: false, jumped: false, question: null, answer: '', t0: 1 };
+}
+function drawPlane(o) {
+  var c = ctx, bob = Math.sin(tAnim * 6 + o.ph) * 2.5;
+  c.save();
+  c.translate(o.x, groundY - o.yb + bob);
+  c.translate(26, -13); c.rotate(Math.sin(tAnim * 5 + o.ph) * 0.06); c.translate(-26, 13);
+  c.lineJoin = 'round'; c.lineWidth = 1.6; c.strokeStyle = '#7d8bb8';
+  // cánh dưới (bóng)
+  c.fillStyle = '#cfd8f3';
+  c.beginPath(); c.moveTo(0, -13); c.lineTo(50, -2); c.lineTo(30, -13); c.closePath(); c.fill(); c.stroke();
+  // cánh trên
+  c.fillStyle = '#ffffff';
+  c.beginPath(); c.moveTo(0, -13); c.lineTo(50, -25); c.lineTo(30, -13); c.closePath(); c.fill(); c.stroke();
+  // nếp gấp giữa
+  c.strokeStyle = '#9aa7d1'; c.lineWidth = 1.2;
+  c.beginPath(); c.moveTo(0, -13); c.lineTo(50, -14); c.stroke();
+  // trái tim đỏ nhỏ
+  c.fillStyle = '#e63950';
+  c.beginPath(); c.moveTo(34, -17); c.bezierCurveTo(31, -21, 37, -22, 37.5, -19); c.bezierCurveTo(38, -22, 44, -21, 41, -17); c.lineTo(37.7, -14.5); c.closePath(); c.fill();
+  c.restore();
+}
 function drawObstacle(o) {
+  if (o.fly) { drawPlane(o); return; }
   var c = ctx, x = o.x, gy = groundY, i;
   if (o.type === 'books') {
     for (i = 0; i < o.n; i++) {
@@ -634,7 +663,7 @@ function initScenery() {
   clouds = [];
   for (i = 0; i < 6; i++) clouds.push({ x: rand(0, W), y: rand(60, groundY * 0.4), s: rand(0.7, 1.4), v: rand(8, 22) });
   birds = [];
-  for (i = 0; i < 3; i++) birds.push({ x: rand(0, W), y: rand(50, groundY * 0.35), v: rand(35, 55), type: Math.random() > 0.5 ? 'bird' : 'paperplane' });
+  for (i = 0; i < 3; i++) birds.push({ x: rand(0, W), y: rand(50, groundY * 0.35), v: rand(35, 55), type: 'bird' });
   pebbles = [];
   for (i = 0; i < 30; i++) pebbles.push({ x: rand(0, W + 60), y: Math.random(), w: rand(3, 8) });
   decor = [];
@@ -644,7 +673,7 @@ function initScenery() {
 function moveScenery(dt, spd) {
   var i, d, mx;
   bgOff += spd * 0.25 * dt;
-  worldTime = (worldTime + dt * 0.02) % 1;
+  if (mode === 'normal') worldTime = (worldTime + dt * 0.02) % 1; else worldTime = 0;
 
   for (i = 0; i < clouds.length; i++) {
     clouds[i].x -= (clouds[i].v + spd * 0.03) * dt;
@@ -665,13 +694,13 @@ function moveScenery(dt, spd) {
   }
 }
 function drawCloud(x, y, s) {
-  ctx.fillStyle = worldTime > 0.6 ? 'rgba(200,210,240,.7)' : 'rgba(255,255,255,.92)';
+  ctx.fillStyle = (mode === 'normal' && worldTime > 0.6) ? 'rgba(200,210,240,.7)' : 'rgba(255,255,255,.92)';
   ctx.beginPath();
   ctx.arc(x, y, 18 * s, 0, 7); ctx.arc(x + 22 * s, y - 8 * s, 22 * s, 0, 7); ctx.arc(x + 46 * s, y, 18 * s, 0, 7);
   ctx.rect(x, y, 46 * s, 18 * s); ctx.fill();
 }
 function drawBird(b) {
-  ctx.strokeStyle = worldTime > 0.6 ? '#fff' : '#333';
+  ctx.strokeStyle = (mode === 'normal' && worldTime > 0.6) ? '#fff' : '#333';
   ctx.lineWidth = 2; ctx.beginPath();
   if (b.type === 'bird') {
     ctx.moveTo(b.x, b.y); ctx.lineTo(b.x + 8, b.y - 6); ctx.lineTo(b.x + 16, b.y);
@@ -684,7 +713,7 @@ function drawBird(b) {
 }
 function drawBackground() {
   var c = ctx, i, x;
-  var isNight = worldTime > 0.6;
+  var isNight = (mode === 'normal' && worldTime > 0.6);
   var g = c.createLinearGradient(0, 0, 0, groundY);
   if (isNight) {
     g.addColorStop(0, '#0f172a'); g.addColorStop(1, '#1e293b');
@@ -701,7 +730,7 @@ function drawBackground() {
   }
 
   for (i = 0; i < clouds.length; i++) drawCloud(clouds[i].x, clouds[i].y, clouds[i].s);
-  for (i = 0; i < birds.length; i++) drawBird(birds[i]);
+  if (mode !== 'normal' || state === 'menu') for (i = 0; i < birds.length; i++) drawBird(birds[i]);
   // Vẽ nền trường học (School building silhouette & clock tower)
   c.fillStyle = isNight ? '#1e293b' : '#dbeafe';
   c.fillRect(W * 0.15, groundY - 110, W * 0.35, 110);
@@ -755,10 +784,15 @@ function generateQuestion() {
     else { a = Math.floor(rand(2, 9)); b = Math.floor(rand(2, 9)); ans = a * b; }
     return { text: a + ' ' + (op === '*' ? 'nhân' : op) + ' ' + b + ' = ?', answer: String(ans) };
   } else if (mode === 'viet') {
-    var cand = WORD_LISTS.viet.filter(function (w) { return recentItems.indexOf(w) < 0; });
+    var pool;
+    if (vietDone < 5) pool = WORD_LISTS.viet1;
+    else if (vietDone < 12) pool = WORD_LISTS.viet2;
+    else pool = (Math.random() < 0.6) ? WORD_LISTS.viet3 : WORD_LISTS.viet2;
+    var cand = pool.filter(function (w) { return recentItems.indexOf(w) < 0; });
+    if (!cand.length) cand = pool;
     var w = cand[(Math.random() * cand.length) | 0];
     recentItems.push(w); if (recentItems.length > 6) recentItems.shift();
-    return { text: 'Đọc: ' + w.toUpperCase(), answer: w };
+    return { text: w.split(' ').length >= 4 ? w : 'Đọc: ' + w.toUpperCase(), answer: w.toLowerCase() };
   } else {
     var candE = WORD_LISTS.english.filter(function (w) { return recentItems.indexOf(w) < 0; });
     var we = candE[(Math.random() * candE.length) | 0];
@@ -847,17 +881,50 @@ function onVoiceResult(ev) {
     }
   }
 }
+function foldVN(x) {
+  var t = String(x || '').toLowerCase();
+  try { t = t.normalize('NFD').replace(/[\u0300-\u036f]/g, ''); } catch (e) {}
+  return t.replace(/đ/g, 'd').replace(/[^a-z0-9\s]/g, ' ').replace(/\s+/g, ' ').trim();
+}
+function lev(a, b) {
+  var m = a.length, n = b.length, i, j, prev = [], cur;
+  for (j = 0; j <= n; j++) prev[j] = j;
+  for (i = 1; i <= m; i++) {
+    cur = [i];
+    for (j = 1; j <= n; j++) cur[j] = Math.min(prev[j] + 1, cur[j - 1] + 1, prev[j - 1] + (a.charAt(i - 1) === b.charAt(j - 1) ? 0 : 1));
+    prev = cur;
+  }
+  return prev[n];
+}
 function checkAnswerMatch(alts, target) {
-  for (var i = 0; i < alts.length; i++) {
-    var t = alts[i].replace(/[^0-9a-zàáảãạâấầẩẫậăắằẳẵặèéẻẽẹêếềểễệìíỉĩịòóỏõọôốồổỗộơớờởỡợùúủũụưứừửữựỳýỷỹỵđ\s]/g, '');
-    if (t.indexOf(target) >= 0 || target.indexOf(t) >= 0) return true;
+  var tf = foldVN(target), tw = tf.split(' '), i, j, k;
+  for (i = 0; i < alts.length; i++) {
+    var t = foldVN(alts[i]);
+    if (!t) continue;
+    var toks = t.split(' ');
+    if (mode === 'math') {
+      if (toks.indexOf(tf) >= 0) return true;
+    } else if (mode === 'english') {
+      for (j = 0; j < toks.length; j++) {
+        var x = toks[j];
+        if (x === tf || (tf.length >= 4 && x === tf + 's')) return true;
+        if (tf.length >= 6 && x.length >= 5 && lev(x, tf) <= (tf.length >= 10 ? 2 : 1)) return true;
+      }
+      if (toks.join('') === tf) return true;
+    } else { // viet: bỏ dấu thanh nhưng giữ nguyên L / N
+      if (t.indexOf(tf) >= 0) return true;
+      var hit = 0;
+      for (k = 0; k < tw.length; k++) if (toks.indexOf(tw[k]) >= 0) hit++;
+      var need = tw.length >= 4 ? Math.ceil(tw.length * 0.7) : tw.length;
+      if (hit >= need) return true;
+    }
   }
   return false;
 }
 function voiceSuccess() {
   var o = activeObs; if (!o) return;
   o.armed = true; lastTarget = o.answer; lastSuccessAt = performance.now();
-  activeObs = null; scoreF += 15;
+  activeObs = null; scoreF += 15; if (mode === 'viet') vietDone++;
   AudioEngine.sfxScore();
   $('wordCard').classList.add('ok');
   $('wordLabel').textContent = '✔ CHÍNH XÁC!';
@@ -869,6 +936,7 @@ function showQuestion(o) {
   $('wordCard').classList.remove('ok');
   $('wordLabel').textContent = mode === 'math' ? '🔢 ĐỌC ĐÁP ÁN PHÉP TÍNH' : (mode === 'viet' ? '📖 ĐỌC ĐÚNG CHÍNH TẢ L/N' : '🔤 ĐỌC TỪ TIẾNG ANH');
   $('wordText').textContent = o.question;
+  $('wordText').className = o.question.length > 16 ? 'long' : '';
   $('timeFill').style.width = '100%';
   $('timeFill').style.background = '#2ecc71';
   setHeard('Hãy đọc to…');
@@ -923,6 +991,7 @@ function beginGame() {
   showStartError('');
   obstacles = []; recentItems = []; activeObs = null; lastTarget = '';
   scoreF = 0; score = 0; speed = CFG[mode].base; nextGap = 0;
+  worldTime = 0; nextPlane = false; duckTimer = 0; duckKey = false; touchDuck = false; vietDone = 0;
   resetPlayer(); newRecord = false;
   hideWord();
   setupHud();
@@ -985,7 +1054,7 @@ function resumeGame() {
   AudioEngine.startBGM();
   if (mode !== 'normal' && SR && !voice.running) { voice.wanted = true; if (!voice.rec) voice.rec = makeRec(); try { voice.rec.start(); } catch (e) {} }
 }
-function gameOver(reason) {
+function gameOver(reason, o) {
   if (state !== 'playing') return;
   state = 'dying'; deadT = 0;
   AudioEngine.sfxOver();
@@ -993,6 +1062,7 @@ function gameOver(reason) {
   player.vy = 320; player.onGround = false;
   if (score > highScores[mode]) { highScores[mode] = score; saveHS(mode, score); newRecord = true; }
   if (reason === 'wrong') overReasonText = 'Bạn đọc sai đáp án cần thiết!';
+  else if (o && o.fly) overReasonText = 'Va phải máy bay giấy rồi! Hãy nhảy qua hoặc cúi xuống để né.';
   else overReasonText = 'Không vượt qua được chướng ngại vật!';
 }
 function showOver() {
@@ -1007,11 +1077,20 @@ function showOver() {
 
 function doJump() {
   if (player.onGround) {
+    duckTimer = 0;
     player.vy = V0; player.onGround = false;
     AudioEngine.sfxJump();
     return true;
   }
   return false;
+}
+function isDucking() {
+  return state === 'playing' && mode === 'normal' && player.onGround && (duckTimer > 0 || duckKey || touchDuck);
+}
+function requestDuck() {
+  if (state !== 'playing' || mode !== 'normal') return;
+  if (!player.onGround) player.vy = Math.min(player.vy, -1100); // rơi nhanh xuống rồi cúi
+  duckTimer = 0.45;
 }
 function requestJump() {
   if (state !== 'playing' || mode !== 'normal') return;
@@ -1019,6 +1098,11 @@ function requestJump() {
 }
 
 /* ---------------- Cập nhật Game & Độ khó tăng dần ---------------- */
+function planNext() {
+  nextPlane = (mode === 'normal' && score >= 100 && Math.random() < Math.min(0.35, 0.15 + (score - 100) / 2000));
+  nextGap = computeGap();
+  if (nextPlane) nextGap = Math.max(nextGap, speed * 1.05);
+}
 function computeGap() {
   return mode !== 'normal' ? speed * rand(4.0, 5.5) : speed * rand(0.9, 1.85);
 }
@@ -1031,6 +1115,7 @@ function update(dt) {
     if (player.y <= 0) { player.y = 0; player.vy = 0; player.onGround = true; if (jumpBuffer > 0) { jumpBuffer = 0; doJump(); } }
   }
   if (jumpBuffer > 0) jumpBuffer = Math.max(0, jumpBuffer - dt);
+  if (duckTimer > 0) duckTimer = Math.max(0, duckTimer - dt);
   runT += dt;
 
   moveScenery(dt, speed);
@@ -1044,8 +1129,8 @@ function update(dt) {
   if (!last || (W - (last.x + last.w)) >= nextGap) {
     var sx = W + 10;
     if (mode !== 'normal') sx = Math.max(sx, playerX + HIT_R + speed * 4.5);
-    obstacles.push(makeObstacle(sx));
-    nextGap = computeGap();
+    obstacles.push(nextPlane ? makePlane(sx) : makeObstacle(sx));
+    planNext();
   }
 
   scoreF += speed * dt * 0.03;
@@ -1053,11 +1138,12 @@ function update(dt) {
 
   if (mode !== 'normal') voiceGameLogic();
 
-  var pl = playerX + HIT_L, pr = playerX + HIT_R, pb = groundY - player.y, pt = pb - HIT_H;
+  var pl = playerX + HIT_L, pr = playerX + HIT_R, pb = groundY - player.y, pt = pb - (isDucking() ? HIT_D : HIT_H);
   for (i = 0; i < obstacles.length; i++) {
     o = obstacles[i];
-    var ox1 = o.x + 4, ox2 = o.x + o.w - 4, oy = groundY - o.h + 5;
-    if (pr > ox1 && pl < ox2 && pb > oy && pt < groundY) { gameOver('hit'); break; }
+    var ox1 = o.x + 4, ox2 = o.x + o.w - 4, oTop = groundY - o.h + 5, oBot = groundY;
+    if (o.fly) { ox1 = o.x + 6; ox2 = o.x + o.w - 6; oTop = groundY - o.top; oBot = groundY - o.bot; }
+    if (pr > ox1 && pl < ox2 && pb > oTop && pt < oBot) { gameOver('hit', o); break; }
   }
   updateHud();
 }
@@ -1109,7 +1195,13 @@ function render() {
     drawPerson(ctx, charType, 0, PH / 2, runT, 'dead');
     ctx.restore();
   } else {
-    drawPerson(ctx, charType, playerX + PW / 2, feetY, runT, player.onGround ? 'run' : 'jump');
+    if (isDucking()) {
+      ctx.save(); ctx.translate(playerX + PW / 2, feetY); ctx.scale(1.12, 0.6);
+      drawPerson(ctx, charType, 0, 0, runT, 'run');
+      ctx.restore();
+    } else {
+      drawPerson(ctx, charType, playerX + PW / 2, feetY, runT, player.onGround ? 'run' : 'jump');
+    }
   }
 }
 
@@ -1157,15 +1249,38 @@ function resize() {
 }
 
 /* ---------------- Sự kiện DOM ---------------- */
-document.getElementById('app').addEventListener('pointerdown', function (e) {
+var ptr = null;
+function endPtr() { if (ptr) { clearTimeout(ptr.timer); ptr = null; } touchDuck = false; }
+var appEl = document.getElementById('app');
+appEl.addEventListener('pointerdown', function (e) {
   if (e.target && e.target.id === 'btnMute') return;
-  if (state === 'playing' && mode === 'normal') { e.preventDefault(); requestJump(); }
+  if (state !== 'playing' || mode !== 'normal') return;
+  e.preventDefault();
+  endPtr();
+  var me = { x: e.clientX, y: e.clientY, acted: false, timer: 0 };
+  me.timer = setTimeout(function () { if (ptr === me && !me.acted) { me.acted = true; requestJump(); } }, 70);
+  ptr = me;
 });
+appEl.addEventListener('pointermove', function (e) {
+  if (!ptr || ptr.acted || state !== 'playing' || mode !== 'normal') return;
+  var dy = e.clientY - ptr.y;
+  if (dy >= 22) { ptr.acted = true; clearTimeout(ptr.timer); touchDuck = true; requestDuck(); }
+  else if (dy <= -22) { ptr.acted = true; clearTimeout(ptr.timer); requestJump(); }
+});
+function onPtrUp() { if (ptr && !ptr.acted && state === 'playing' && mode === 'normal') requestJump(); endPtr(); }
+appEl.addEventListener('pointerup', onPtrUp);
+appEl.addEventListener('pointercancel', endPtr);
 document.addEventListener('keydown', function (e) {
-  if ((e.code === 'Space' || e.key === ' ') && state === 'playing' && mode === 'normal') {
-    e.preventDefault(); requestJump();
-  }
+  if (state !== 'playing' || mode !== 'normal') return;
+  var k = e.code || e.key;
+  if (k === 'Space' || k === ' ' || k === 'ArrowUp' || k === 'KeyW') { e.preventDefault(); requestJump(); }
+  else if (k === 'ArrowDown' || k === 'KeyS') { e.preventDefault(); if (!duckKey) requestDuck(); duckKey = true; }
 });
+document.addEventListener('keyup', function (e) {
+  var k = e.code || e.key;
+  if (k === 'ArrowDown' || k === 'KeyS') duckKey = false;
+});
+document.addEventListener('visibilitychange', function () { if (document.hidden) pauseGame(); });
 window.addEventListener('resize', resize);
 
 $('btnMute').addEventListener('click', function (e) {

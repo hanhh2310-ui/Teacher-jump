@@ -368,7 +368,7 @@ var CFG = {
 
 var WORD_LISTS = {
   english: ['teacher','student','school','book','pencil','class','lesson','homework','notebook','ruler','library','study','learn','reading','writing','happy','flower','gift','respect','knowledge','english','science','history','music','eraser','answer','question','grammar','listen','speak','grateful','wisdom'],
-  viet: ['lên lớp', 'la cà', 'no đủ', 'na ná', 'lúc lắc', 'lông lá', 'nói năng', 'làm lụng', 'nấu nướng', 'nặng nề', 'long lanh', 'nức nở', 'long trọng', 'nông nổi', 'lấp lánh', 'lững lờ', 'nhao nhác', 'lấm lét', 'nũng nịu', 'lan man', 'Thầy cô luôn mạnh khoẻ', 'Vượt qua mọi chướng ngại vật', 'Chào mừng ngày nhà giáo', 'Học sinh chăm ngoan học giỏi', 'Tôn sư trọng đạo ngàn năm']
+  viet: ['long lanh','nức nở','long trọng','nông nổi','lên lớp','nói năng','làm lụng','nấu nướng','la cà','no đủ','lấp lánh','na ná','lững lờ','nhao nhác','lấm lét','nũng nịu','long tuột','nặng nề','lan man','nền nã','lợi lộc','nản lòng']
 };
 
 /* ---------------- Trạng thái ---------------- */
@@ -651,12 +651,8 @@ function moveScenery(dt, spd) {
     if (clouds[i].x < -120) { clouds[i].x = W + rand(20, 200); clouds[i].y = rand(60, groundY * 0.4); }
   }
   for (i = 0; i < birds.length; i++) {
-    birds[i].x -= (spd * 1.3 + birds[i].v) * dt;
-    if (birds[i].x < -60) { 
-      birds[i].x = W + rand(200, 600); 
-      birds[i].y = rand(groundY - 140, groundY - 60); 
-      birds[i].type = Math.random() > 0.5 ? 'bird' : 'paperplane';
-    }
+    birds[i].x -= (birds[i].v + spd * 0.05) * dt;
+    if (birds[i].x < -60) { birds[i].x = W + rand(50, 300); birds[i].y = rand(40, groundY * 0.35); }
   }
   for (i = 0; i < pebbles.length; i++) {
     pebbles[i].x -= spd * dt;
@@ -1057,20 +1053,7 @@ function update(dt) {
 
   if (mode !== 'normal') voiceGameLogic();
 
-
-  // Kiểm tra va chạm chim bay / máy bay giấy
   var pl = playerX + HIT_L, pr = playerX + HIT_R, pb = groundY - player.y, pt = pb - HIT_H;
-  for (i = 0; i < birds.length; i++) {
-    var b = birds[i];
-    // Chim bay/máy bay giấy ở trên cao (khoảng từ groundY - 120 đến groundY - 60)
-    // Nếu nhân vật nhảy không tới hoặc đang đứng trên đất mà chim bay thấp ngang đầu
-    var bx1 = b.x, bx2 = b.x + 30, by1 = b.y - 10, by2 = b.y + 10;
-    if (pr > bx1 && pl < bx2 && pb > by1 && pt < by2) {
-      gameOver('hit');
-      break;
-    }
-  }
-
   for (i = 0; i < obstacles.length; i++) {
     o = obstacles[i];
     var ox1 = o.x + 4, ox2 = o.x + o.w - 4, oy = groundY - o.h + 5;

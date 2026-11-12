@@ -361,9 +361,9 @@ var HIT_L = 10, HIT_R = 34, HIT_H = 68;
 
 var CFG = {
   normal:  { base: 300, max: 620, inc: 0.35 },
-  math:    { base: 220, max: 360, inc: 0.12 },
-  viet:    { base: 220, max: 360, inc: 0.12 },
-  english: { base: 220, max: 360, inc: 0.12 }
+  math:    { base: 140, max: 220, inc: 0.04 },
+  viet:    { base: 140, max: 220, inc: 0.04 },
+  english: { base: 140, max: 220, inc: 0.04 }
 };
 
 var WORD_LISTS = {
@@ -702,6 +702,34 @@ function drawBackground() {
 
   for (i = 0; i < clouds.length; i++) drawCloud(clouds[i].x, clouds[i].y, clouds[i].s);
   for (i = 0; i < birds.length; i++) drawBird(birds[i]);
+  // Vẽ nền trường học (School building silhouette & clock tower)
+  c.fillStyle = isNight ? '#1e293b' : '#dbeafe';
+  c.fillRect(W * 0.15, groundY - 110, W * 0.35, 110);
+  // Mái trường
+  c.fillStyle = isNight ? '#334155' : '#93c5fd';
+  c.beginPath();
+  c.moveTo(W * 0.12, groundY - 110);
+  c.lineTo(W * 0.325, groundY - 150);
+  c.lineTo(W * 0.53, groundY - 110);
+  c.closePath();
+  c.fill();
+  // Tháp đồng hồ trường
+  c.fillStyle = isNight ? '#1e293b' : '#dbeafe';
+  c.fillRect(W * 0.29, groundY - 165, W * 0.07, 55);
+  c.fillStyle = isNight ? '#334155' : '#60a5fa';
+  c.beginPath();
+  c.arc(W * 0.325, groundY - 145, 12, 0, Math.PI * 2);
+  c.fill();
+  c.fillStyle = isNight ? '#fff' : '#1e3a8a';
+  c.font = 'bold 9px sans-serif'; c.textAlign = 'center'; c.textBaseline = 'middle';
+  c.fillText('9D3', W * 0.325, groundY - 145);
+  // Cửa sổ trường
+  c.fillStyle = isNight ? '#334155' : '#bfdbfe';
+  for (var wx = W * 0.18; wx < W * 0.45; wx += 35) {
+    c.fillRect(wx, groundY - 95, 20, 30);
+    c.fillRect(wx, groundY - 50, 20, 30);
+  }
+
 
   c.fillStyle = isNight ? '#1e3a2f' : '#b8ecb0'; c.beginPath(); c.moveTo(0, groundY);
   for (x = 0; x <= W; x += 16) c.lineTo(x, groundY - 46 - 20 * Math.sin((x + bgOff * 0.6) / 95));
@@ -992,7 +1020,7 @@ function requestJump() {
 
 /* ---------------- Cập nhật Game & Độ khó tăng dần ---------------- */
 function computeGap() {
-  return mode !== 'normal' ? speed * rand(2.8, 3.8) : speed * rand(0.9, 1.85);
+  return mode !== 'normal' ? speed * rand(4.0, 5.5) : speed * rand(0.9, 1.85);
 }
 function update(dt) {
   var cfg = CFG[mode], i, o;
@@ -1015,7 +1043,7 @@ function update(dt) {
   var last = obstacles[obstacles.length - 1];
   if (!last || (W - (last.x + last.w)) >= nextGap) {
     var sx = W + 10;
-    if (mode !== 'normal') sx = Math.max(sx, playerX + HIT_R + speed * 3.0);
+    if (mode !== 'normal') sx = Math.max(sx, playerX + HIT_R + speed * 4.5);
     obstacles.push(makeObstacle(sx));
     nextGap = computeGap();
   }
